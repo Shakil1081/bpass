@@ -10,44 +10,56 @@
         <form method="POST" action="{{ route("admin.requisitions.update", [$requisition->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            <div class="form-group">
-                <label for="updated_by_id">{{ trans('cruds.requisition.fields.updated_by') }}</label>
-                <select class="form-control select2 {{ $errors->has('updated_by') ? 'is-invalid' : '' }}" name="updated_by_id" id="updated_by_id">
-                    @foreach($updated_bies as $id => $entry)
-                        <option value="{{ $id }}" {{ (old('updated_by_id') ? old('updated_by_id') : $requisition->updated_by->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('updated_by'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('updated_by') }}
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="updated_by_id">{{ trans('cruds.requisition.fields.updated_by') }}</label>
+                        <select class="form-control select2 {{ $errors->has('updated_by') ? 'is-invalid' : '' }}" name="updated_by_id" id="updated_by_id">
+                            @foreach($updated_bies as $id => $entry)
+                                <option value="{{ $id }}" {{ (old('updated_by_id') ? old('updated_by_id') : $requisition->updated_by->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('updated_by'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('updated_by') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.requisition.fields.updated_by_helper') }}</span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.requisition.fields.updated_by_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="requisition_date">{{ trans('cruds.requisition.fields.requisition_date') }}</label>
-                <input class="form-control date {{ $errors->has('requisition_date') ? 'is-invalid' : '' }}" type="text" name="requisition_date" id="requisition_date" value="{{ old('requisition_date', $requisition->requisition_date) }}">
-                @if($errors->has('requisition_date'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('requisition_date') }}
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="required" for="department_id">{{ trans('cruds.requisition.fields.department') }}</label>
+                        <select class="form-control select2 {{ $errors->has('department') ? 'is-invalid' : '' }}" name="department_id" id="department_id" required>
+                            @foreach($departments as $id => $entry)
+                                <option value="{{ $id }}" {{ (old('department_id') ? old('department_id') : $requisition->department->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('department'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('department') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.requisition.fields.department_helper') }}</span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.requisition.fields.requisition_date_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="department_id">{{ trans('cruds.requisition.fields.department') }}</label>
-                <select class="form-control select2 {{ $errors->has('department') ? 'is-invalid' : '' }}" name="department_id" id="department_id" required>
-                    @foreach($departments as $id => $entry)
-                        <option value="{{ $id }}" {{ (old('department_id') ? old('department_id') : $requisition->department->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('department'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('department') }}
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="requisition_date">{{ trans('cruds.requisition.fields.requisition_date') }}</label>
+                        <input class="form-control date {{ $errors->has('requisition_date') ? 'is-invalid' : '' }}" type="text" name="requisition_date" id="requisition_date" value="{{ old('requisition_date', $requisition->requisition_date) }}">
+                        @if($errors->has('requisition_date'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('requisition_date') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.requisition.fields.requisition_date_helper') }}</span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.requisition.fields.department_helper') }}</span>
+                </div>
             </div>
+
+
+
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
