@@ -97,6 +97,14 @@
                 </a>
             </li>
         @endcan
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route("admin.bank-account.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/bank-account") || request()->is("admin/bank-account/*") ? "c-active" : "" }}">
+                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                </i>
+                {{ trans('cruds.bank_account.title') }}
+            </a>
+        </li>
         @can('party_group_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.party-groups.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/party-groups") || request()->is("admin/party-groups/*") ? "c-active" : "" }}">

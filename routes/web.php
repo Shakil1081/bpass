@@ -44,6 +44,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('organizations/ckmedia', 'OrganizationController@storeCKEditorImages')->name('organizations.storeCKEditorImages');
     Route::resource('organizations', 'OrganizationController');
 
+    //bank account
+    Route::resource('bank-account', 'BankAccountController');
+
     // Party Group
     Route::delete('party-groups/destroy', 'PartyGroupController@massDestroy')->name('party-groups.massDestroy');
     Route::post('party-groups/parse-csv-import', 'PartyGroupController@parseCsvImport')->name('party-groups.parseCsvImport');
