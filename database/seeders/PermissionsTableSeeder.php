@@ -346,6 +346,26 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => 84,
                 'title' => 'profile_password_edit',
             ],
+            [
+                'id'    => 85,
+                'title' => 'bank_account_show',
+            ],
+            [
+                'id'    => 86,
+                'title' => 'bank_account_edit',
+            ],
+            [
+                'id'    => 87,
+                'title' => 'bank_account_delete',
+            ],
+            [
+                'id'    => 88,
+                'title' => 'bank_account_create',
+            ],
+            [
+                'id'    => 89,
+                'title' => 'bank_account_access',
+            ],
         ];
 
         Permission::insert($permissions);

@@ -11,17 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bank_accounts', function (Blueprint $table) {
+        Schema::create('cheques', function (Blueprint $table) {
             $table->id();
-            $table->string('created_by')->nullable();
-            $table->string('updated_by')->nullable();
-            $table->string('finance_bank_id')->nullable();
-            $table->string('organization_id')->nullable();
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
             $table->string('created_stamp')->nullable();
             $table->string('last_updated_stamp')->nullable();
-            $table->string('account_name')->nullable();
-            $table->string('account_no')->nullable();
-            $table->string('branch_name')->nullable();
+            $table->string('cheque_amount');
+            $table->string('cheque_date');
+            $table->string('cheque_no');
+            $table->string('bank_account_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bank_accounts');
+        Schema::dropIfExists('cheques');
     }
 };
