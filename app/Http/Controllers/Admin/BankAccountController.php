@@ -108,9 +108,6 @@ class BankAccountController extends Controller
         return redirect()->route('admin.bank-account.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(BankAccount $bankAccount)
     {
         abort_if(Gate::denies('bank_account_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');

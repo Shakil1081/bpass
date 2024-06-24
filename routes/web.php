@@ -47,6 +47,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //bank account
     Route::resource('bank-account', 'BankAccountController');
 
+    //bank account
+    Route::resource('cheques', 'ChequeController');
+
     // Party Group
     Route::delete('party-groups/destroy', 'PartyGroupController@massDestroy')->name('party-groups.massDestroy');
     Route::post('party-groups/parse-csv-import', 'PartyGroupController@parseCsvImport')->name('party-groups.parseCsvImport');

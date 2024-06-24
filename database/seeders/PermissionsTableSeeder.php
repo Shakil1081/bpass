@@ -366,6 +366,26 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => 89,
                 'title' => 'bank_account_access',
             ],
+            [
+                'id'    => 90,
+                'title' => 'cheques_show',
+            ],
+            [
+                'id'    => 91,
+                'title' => 'cheques_edit',
+            ],
+            [
+                'id'    => 92,
+                'title' => 'cheques_delete',
+            ],
+            [
+                'id'    => 93,
+                'title' => 'cheques_create',
+            ],
+            [
+                'id'    => 94,
+                'title' => 'cheques_access',
+            ],
         ];
 
         Permission::insert($permissions);
