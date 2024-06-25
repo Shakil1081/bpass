@@ -3,23 +3,27 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ChequeDetailsRequest;
 use App\Http\Requests\ChequeRequest;
-use App\Models\BankAccount;
 use App\Models\Cheque;
+use App\Models\ChequeDetails;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
-class ChequeController extends Controller
+class ChequeDetailsController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index(Request $request)
     {
         abort_if(Gate::denies('cheques_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Cheque::with(['createdInfo','updatedInfo', 'bankAccount'])->select(sprintf('%s.*', (new Cheque)->table));
+            $query = ChequeDetails::with(['createdInfo','updatedInfo', 'chequeInfo'])->select(sprintf('%s.*', (new ChequeDetails)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -29,7 +33,7 @@ class ChequeController extends Controller
                 $viewGate      = 'cheques_show';
                 $editGate      = 'cheques_edit';
                 $deleteGate    = 'cheques_delete';
-                $crudRoutePart = 'cheques';
+                $crudRoutePart = 'cheques-details';
 
                 return view('partials.datatablesActions', compact(
                     'viewGate',
@@ -51,8 +55,8 @@ class ChequeController extends Controller
                 return $row->updatedInfo ? $row->updatedInfo->name : '';
             });
 
-            $table->editColumn('bank_account_id', function ($row) {
-                return $row->bankAccount ? $row->bankAccount->account_name: '';
+            $table->editColumn('chequeInfo', function ($row) {
+                return $row->chequeInfo ? $row->chequeInfo->cheque_no: '';
             });
             $table->editColumn('created_stamp', function ($row) {
                 return $row->created_stamp ? $row->created_stamp : '';
@@ -61,71 +65,75 @@ class ChequeController extends Controller
                 return $row->last_updated_stamp ? $row->last_updated_stamp : '';
             });
 
-            $table->editColumn('cheque_amount', function ($row) {
-                return $row->cheque_amount ? $row->cheque_amount : '';
-            });
 
-            $table->editColumn('cheque_date', function ($row) {
-                return $row->cheque_date ? $row->cheque_date : '';
-            });
-
-            $table->editColumn('cheque_no', function ($row) {
-                return $row->cheque_no ? $row->cheque_no : '';
-            });
 
             $table->rawColumns(['actions', 'placeholder', 'created_by']);
 
             return $table->make(true);
         }
 
-        return view('admin.cheque.index');
+        return view('admin.cheque.detailsIndex');
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
         $created_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $updated_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $bankAccounts = BankAccount::pluck('account_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $cheques = Cheque::pluck('cheque_no', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.cheque.create', compact('created_bies', 'updated_bies','bankAccounts'));
+        return view('admin.cheque.detailsCreate', compact('created_bies', 'updated_bies','cheques'));
     }
 
-    public function store(ChequeRequest $request)
+    public function store(ChequeDetailsRequest $request)
     {
-        Cheque::create($request->all());
-
-        return redirect()->route('admin.cheques.index');
+        ChequeDetails::create($request->all());
+        return redirect()->route('admin.cheques-details.index');
     }
 
-    public function show(Cheque $cheque)
+    public function show($id)
     {
+        $chequeDetails = ChequeDetails::where('id', $id)->first();
         abort_if(Gate::denies('cheques_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        return view('admin.cheque.show', compact('cheque'));
+        return view('admin.cheque.detailsShow', compact('chequeDetails'));
     }
 
-    public function edit(Cheque $cheque)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
     {
+        $chequeDetails = ChequeDetails::where('id', $id)->first();
+
         $created_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $updated_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $bankAccounts = BankAccount::pluck('account_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $cheques = Cheque::pluck('cheque_no', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.cheque.edit', compact('created_bies', 'updated_bies','bankAccounts','cheque'));
+        return view('admin.cheque.detailsEdit', compact('created_bies', 'updated_bies','cheques','chequeDetails'));
     }
 
-    public function update(ChequeRequest $request, Cheque $cheque)
+    public function update(ChequeDetailsRequest $request, $id)
     {
-        $cheque->update($request->all());
-        return redirect()->route('admin.cheques.index');
+        ChequeDetails::where('id', $id)->update([
+            'created_by' => $request->created_by,
+            'updated_by' => $request->updated_by,
+            'cheque_id' => $request->cheque_id,
+            'invoice_id' => $request->invoice_id,
+            'created_stamp' => $request->created_stamp,
+            'last_updated_stamp' => $request->last_updated_stamp,
+        ]);
+        return redirect()->route('admin.cheques-details.index');
     }
 
-    public function destroy(Cheque $cheque)
+    public function destroy($id)
     {
-        $cheque->delete();
+        ChequeDetails::where('id', $id)->delete();
         return redirect()->back();
     }
 }

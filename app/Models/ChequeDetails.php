@@ -6,13 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Document extends Model
+class ChequeDetails extends Model
 {
     use SoftDeletes, HasFactory;
 
-    public $table = 'documents';
+    public $table = 'cheque_details';
 
-    protected $guarded ;
+    protected $fillable = [
+        'created_by',
+        'updated_by',
+        'cheque_id',
+        'created_stamp',
+        'last_updated_stamp',
+    ];
 
     public function createdInfo()
     {
@@ -24,8 +30,8 @@ class Document extends Model
         return $this->belongsTo(User::class, 'updated_by');
     }
 
-    public function organizationInfo()
+    public function chequeInfo()
     {
-        return $this->belongsTo(Organization::class, 'organization_id');
+        return $this->belongsTo(Cheque::class, 'cheque_id');
     }
 }

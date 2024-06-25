@@ -117,6 +117,16 @@
                 </a>
             </li>
         @endcan
+        @can('cheques_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.cheques-details.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/cheques-details") || request()->is("admin/cheques-details/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.cheque_details.title') }}
+                </a>
+            </li>
+        @endcan
         @can('party_group_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.party-groups.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/party-groups") || request()->is("admin/party-groups/*") ? "c-active" : "" }}">
@@ -157,6 +167,17 @@
                 </a>
             </li>
         @endcan
+
+        @can('documents_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.documents.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/documents") || request()->is("admin/documents/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.documents.title') }}
+                </a>
+            </li>
+        @endcan
         @can('non_purchase_order_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.non-purchase-orders.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/non-purchase-orders") || request()->is("admin/non-purchase-orders/*") ? "c-active" : "" }}">
@@ -187,6 +208,17 @@
                 </a>
             </li>
         @endcan
+        @can('products_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.products.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/products") || request()->is("admin/products/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.products.title') }}
+                </a>
+            </li>
+        @endcan
+
         @can('term_condition_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.term-conditions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/term-conditions") || request()->is("admin/term-conditions/*") ? "c-active" : "" }}">

@@ -47,8 +47,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //bank account
     Route::resource('bank-account', 'BankAccountController');
 
-    //bank account
+    //cheques account
     Route::resource('cheques', 'ChequeController');
+    Route::resource('cheques-details', 'ChequeDetailsController');
+
+    //Requisitions
+    Route::resource('products', 'ProductController');
+
+    //Documents
+    Route::resource('documents', 'DocumentController');
 
     // Party Group
     Route::delete('party-groups/destroy', 'PartyGroupController@massDestroy')->name('party-groups.massDestroy');
