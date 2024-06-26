@@ -239,6 +239,17 @@
                 </a>
             </li>
         @endcan
+
+        @can('budget_details_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.budget-details.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/budget-details") || request()->is("admin/budget-details/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.budget_details.title') }}
+                </a>
+            </li>
+        @endcan
         @can('expense_type_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.expense-types.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/expense-types") || request()->is("admin/expense-types/*") ? "c-active" : "" }}">

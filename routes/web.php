@@ -110,6 +110,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('budgets/parse-csv-import', 'BudgetController@parseCsvImport')->name('budgets.parseCsvImport');
     Route::post('budgets/process-csv-import', 'BudgetController@processCsvImport')->name('budgets.processCsvImport');
     Route::resource('budgets', 'BudgetController');
+    //budget_details
+    Route::resource('budget-details', 'BudgetDetailsController');
 
     // Expense Type
     Route::delete('expense-types/destroy', 'ExpenseTypeController@massDestroy')->name('expense-types.massDestroy');
