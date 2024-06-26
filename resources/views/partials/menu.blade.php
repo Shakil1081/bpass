@@ -157,6 +157,16 @@
                 </a>
             </li>
         @endcan
+        @can('party_bills_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.party-bills.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/party-bills") || request()->is("admin/party-bills/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.party_bills.title') }}
+                </a>
+            </li>
+        @endcan
         @can('department_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.departments.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/departments") || request()->is("admin/departments/*") ? "c-active" : "" }}">
@@ -178,6 +188,18 @@
                 </a>
             </li>
         @endcan
+
+        @can('disbursements_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.disbursements.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/disbursements") || request()->is("admin/disbursements/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.disbursements.title') }}
+                </a>
+            </li>
+        @endcan
+
         @can('non_purchase_order_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.non-purchase-orders.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/non-purchase-orders") || request()->is("admin/non-purchase-orders/*") ? "c-active" : "" }}">

@@ -57,6 +57,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //Documents
     Route::resource('documents', 'DocumentController');
 
+    //disbursements
+    Route::resource('disbursements', 'DisbursementController');
+
     // Party Group
     Route::delete('party-groups/destroy', 'PartyGroupController@massDestroy')->name('party-groups.massDestroy');
     Route::post('party-groups/parse-csv-import', 'PartyGroupController@parseCsvImport')->name('party-groups.parseCsvImport');
@@ -76,6 +79,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('party-tables/parse-csv-import', 'PartyTableController@parseCsvImport')->name('party-tables.parseCsvImport');
     Route::post('party-tables/process-csv-import', 'PartyTableController@processCsvImport')->name('party-tables.processCsvImport');
     Route::resource('party-tables', 'PartyTableController');
+    Route::resource('party-bills', 'PartyBillController');
 
     // Department
     Route::delete('departments/destroy', 'DepartmentController@massDestroy')->name('departments.massDestroy');
