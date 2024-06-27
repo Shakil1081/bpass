@@ -200,6 +200,17 @@
             </li>
         @endcan
 
+        @can('bar_codes_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.barcodes.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/barcodes") || request()->is("admin/barcodes/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.barcodes.title') }}
+                </a>
+            </li>
+        @endcan
+
         @can('non_purchase_order_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.non-purchase-orders.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/non-purchase-orders") || request()->is("admin/non-purchase-orders/*") ? "c-active" : "" }}">

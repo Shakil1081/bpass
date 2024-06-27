@@ -60,6 +60,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //disbursements
     Route::resource('disbursements', 'DisbursementController');
 
+    //barcodes
+    Route::resource('barcodes', 'BarCodeController');
+
     // Party Group
     Route::delete('party-groups/destroy', 'PartyGroupController@massDestroy')->name('party-groups.massDestroy');
     Route::post('party-groups/parse-csv-import', 'PartyGroupController@parseCsvImport')->name('party-groups.parseCsvImport');
