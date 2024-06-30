@@ -386,6 +386,126 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => 94,
                 'title' => 'cheques_access',
             ],
+            [
+                'id'    => 95,
+                'title' => 'products_access',
+            ],
+            [
+                'id'    => 96,
+                'title' => 'products_create',
+            ],
+            [
+                'id'    => 97,
+                'title' => 'products_delete',
+            ],
+            [
+                'id'    => 98,
+                'title' => 'products_edit',
+            ],
+            [
+                'id'    => 99,
+                'title' => 'products_show',
+            ],
+            [
+                'id'    => 100,
+                'title' => 'documents_access',
+            ],
+            [
+                'id'    => 101,
+                'title' => 'documents_create',
+            ],
+            [
+                'id'    => 102,
+                'title' => 'documents_delete',
+            ],
+            [
+                'id'    => 103,
+                'title' => 'documents_edit',
+            ],
+            [
+                'id'    => 104,
+                'title' => 'documents_show',
+            ],
+            [
+                'id'    => 105,
+                'title' => 'budget_details_access',
+            ],
+            [
+                'id'    => 106,
+                'title' => 'budget_details_create',
+            ],
+            [
+                'id'    => 107,
+                'title' => 'budget_details_delete',
+            ],
+            [
+                'id'    => 108,
+                'title' => 'budget_details_edit',
+            ],
+            [
+                'id'    => 109,
+                'title' => 'budget_details_show',
+            ],
+            [
+                'id'    => 110,
+                'title' => 'party_bills_access',
+            ],
+            [
+                'id'    => 111,
+                'title' => 'party_bills_create',
+            ],
+            [
+                'id'    => 112,
+                'title' => 'party_bills_delete',
+            ],
+            [
+                'id'    => 113,
+                'title' => 'party_bills_edit',
+            ],
+            [
+                'id'    => 114,
+                'title' => 'party_bills_show',
+            ],
+            [
+                'id'    => 115,
+                'title' => 'disbursements_access',
+            ],
+            [
+                'id'    => 116,
+                'title' => 'disbursements_create',
+            ],
+            [
+                'id'    => 117,
+                'title' => 'disbursements_delete',
+            ],
+            [
+                'id'    => 118,
+                'title' => 'disbursements_edit',
+            ],
+            [
+                'id'    => 119,
+                'title' => 'disbursements_show',
+            ],
+            [
+                'id'    => 120,
+                'title' => 'bar_codes_access',
+            ],
+            [
+                'id'    => 121,
+                'title' => 'bar_codes_create',
+            ],
+            [
+                'id'    => 122,
+                'title' => 'bar_codes_delete',
+            ],
+            [
+                'id'    => 123,
+                'title' => 'bar_codes_edit',
+            ],
+            [
+                'id'    => 124,
+                'title' => 'bar_codes_show',
+            ],
         ];
 
         Permission::insert($permissions);
