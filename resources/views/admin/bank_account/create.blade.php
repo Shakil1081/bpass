@@ -29,8 +29,8 @@
 
                 <div class="col-6">
                     <div class="form-group">
-                        <label for="updated_by_id">{{ trans('cruds.bank_account.fields.updated_by') }}</label>
-                        <select class="form-control select2 {{ $errors->has('updated_by') ? 'is-invalid' : '' }}" name="updated_by_id" id="updated_by_id">
+                        <label for="updated_by">{{ trans('cruds.bank_account.fields.updated_by') }}</label>
+                        <select class="form-control select2 {{ $errors->has('updated_by') ? 'is-invalid' : '' }}" name="updated_by" id="updated_by">
                             @foreach($updated_bies as $id => $entry)
                                 <option value="{{ $id }}" {{ old('updated_by_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                             @endforeach

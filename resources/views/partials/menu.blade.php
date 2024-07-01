@@ -80,7 +80,7 @@
         @can('finance_bank_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.finance-banks.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/finance-banks") || request()->is("admin/finance-banks/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-wallet c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.financeBank.title') }}
@@ -90,7 +90,7 @@
         @can('organization_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.organizations.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/organizations") || request()->is("admin/organizations/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-warehouse c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.organization.title') }}
@@ -100,7 +100,7 @@
         @can('bank_account_access')
         <li class="c-sidebar-nav-item">
             <a href="{{ route("admin.bank-account.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/bank-account") || request()->is("admin/bank-account/*") ? "c-active" : "" }}">
-                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                <i class="fa-fw fas fa-money-bill c-sidebar-nav-icon">
 
                 </i>
                 {{ trans('cruds.bank_account.title') }}
@@ -110,7 +110,7 @@
         @can('cheques_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.cheques.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/cheques") || request()->is("admin/cheques/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-money-check c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.cheques.title') }}
@@ -120,7 +120,7 @@
         @can('cheques_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.cheques-details.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/cheques-details") || request()->is("admin/cheques-details/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-money-check c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.cheque_details.title') }}
@@ -130,7 +130,7 @@
         @can('party_group_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.party-groups.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/party-groups") || request()->is("admin/party-groups/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-users c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.partyGroup.title') }}
@@ -140,7 +140,7 @@
         @can('party_group_bd_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.party-group-bds.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/party-group-bds") || request()->is("admin/party-group-bds/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-users c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.partyGroupBd.title') }}
@@ -150,7 +150,7 @@
         @can('party_table_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.party-tables.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/party-tables") || request()->is("admin/party-tables/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-table c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.partyTable.title') }}
@@ -160,7 +160,7 @@
         @can('party_bills_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.party-bills.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/party-bills") || request()->is("admin/party-bills/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-money-bill-alt c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.party_bills.title') }}
@@ -170,7 +170,7 @@
         @can('department_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.departments.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/departments") || request()->is("admin/departments/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-building c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.department.title') }}
@@ -181,7 +181,7 @@
         @can('documents_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.documents.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/documents") || request()->is("admin/documents/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-file c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.documents.title') }}
@@ -203,7 +203,7 @@
         @can('bar_codes_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.barcodes.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/barcodes") || request()->is("admin/barcodes/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-barcode c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.barcodes.title') }}
@@ -214,7 +214,7 @@
         @can('non_purchase_order_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.non-purchase-orders.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/non-purchase-orders") || request()->is("admin/non-purchase-orders/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-store c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.nonPurchaseOrder.title') }}
@@ -224,7 +224,7 @@
         @can('requisition_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.requisitions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/requisitions") || request()->is("admin/requisitions/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-file c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.requisition.title') }}
@@ -234,7 +234,7 @@
         @can('purchase_order_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.purchase-orders.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/purchase-orders") || request()->is("admin/purchase-orders/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-store c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.purchaseOrder.title') }}
@@ -244,7 +244,7 @@
         @can('products_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.products.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/products") || request()->is("admin/products/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-gift c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.products.title') }}
@@ -255,7 +255,7 @@
         @can('term_condition_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.term-conditions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/term-conditions") || request()->is("admin/term-conditions/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-info c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.termCondition.title') }}
@@ -265,7 +265,7 @@
         @can('budget_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.budgets.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/budgets") || request()->is("admin/budgets/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-money-bill-alt c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.budget.title') }}
@@ -276,7 +276,7 @@
         @can('budget_details_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.budget-details.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/budget-details") || request()->is("admin/budget-details/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-money-bill-wave c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.budget_details.title') }}
