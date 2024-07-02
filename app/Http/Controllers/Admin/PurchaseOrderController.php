@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyPurchaseOrderRequest;
 use App\Http\Requests\StorePurchaseOrderRequest;
 use App\Http\Requests\UpdatePurchaseOrderRequest;
+use App\Models\Department;
 use App\Models\Organization;
 use App\Models\PurchaseOrder;
 use App\Models\Requisition;
@@ -225,5 +226,12 @@ class PurchaseOrderController extends Controller
         }
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function purchaseOrderEntry()
+    {
+        $department = Department::pluck('department_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.purchaseOrders.entry', compact( 'department'));
     }
 }

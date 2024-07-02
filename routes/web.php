@@ -98,6 +98,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('purchase-orders/destroy', 'PurchaseOrderController@massDestroy')->name('purchase-orders.massDestroy');
     Route::post('purchase-orders/parse-csv-import', 'PurchaseOrderController@parseCsvImport')->name('purchase-orders.parseCsvImport');
     Route::post('purchase-orders/process-csv-import', 'PurchaseOrderController@processCsvImport')->name('purchase-orders.processCsvImport');
+
+    //new added
+    Route::get('purchase-orders/entry', 'PurchaseOrderController@purchaseOrderEntry')->name('purchase-orders.entry');
+    
     Route::resource('purchase-orders', 'PurchaseOrderController');
 
     // Requisition
