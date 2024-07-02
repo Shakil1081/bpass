@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyPurchaseOrderRequest;
+use App\Http\Requests\PurchaseOrderEntryRequest;
 use App\Http\Requests\StorePurchaseOrderRequest;
 use App\Http\Requests\UpdatePurchaseOrderRequest;
 use App\Models\Department;
@@ -233,5 +234,10 @@ class PurchaseOrderController extends Controller
         $department = Department::pluck('department_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.purchaseOrders.entry', compact( 'department'));
+    }
+
+    public function purchaseOrderEntryStore(PurchaseOrderEntryRequest $request)
+    {
+        return $request->all();
     }
 }

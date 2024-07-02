@@ -4,36 +4,40 @@
     <h4>
         {{ trans('cruds.purchase_order_entry.title_singular') }}
     </h4>
-    <form method="POST" action="">
+    <form method="POST" action="{{ route('admin.purchase-orders.entryStore') }}">
         @csrf
-        <div class="row">
-            <div class="col-4">
-                <div class="form-group">
-                    <label class="required" for="created_by">{{ trans('cruds.purchase_order_entry.fields.department_id') }}</label>
-                    <select class="form-control select2 {{ $errors->has('department_id') ? 'is-invalid' : '' }}" name="department_id" id="department_id" required>
-                        {{--  @foreach($created_bies as $id => $entry)--}}
-                        {{--     <option value="{{ $id }}" {{ old('created_by') == $id ? 'selected' : '' }}>{{ $entry }}</option>--}}
-                        {{--  @endforeach--}}
-                    </select>
-                    @if($errors->has('department_id'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('department_id') }}
+        <div class="card">
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="required" for="created_by">{{ trans('cruds.purchase_order_entry.fields.department_id') }}</label>
+                            <select class="form-control select2 {{ $errors->has('department_id') ? 'is-invalid' : '' }}" name="department_id" id="department_id" required>
+                                  @foreach($department as $id => $entry)
+                                     <option value="{{ $id }}" {{ old('created_by') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                  @endforeach
+                            </select>
+                            @if($errors->has('department_id'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('department_id') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.purchase_order_entry.fields.department_id_helper') }}</span>
                         </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.purchase_order_entry.fields.department_id_helper') }}</span>
-                </div>
-            </div>
-            <div class="col-4"></div>
-            <div class="col-4">
-                <div class="form-group">
-                    <label for="reference_date">{{ trans('cruds.purchase_order_entry.fields.mpr_date') }}</label>
-                    <input class="form-control date {{ $errors->has('mpr_date') ? 'is-invalid' : '' }}" type="text" name="mpr_date" id="mpr_date" value="{{ old('reference_date') }}">
-                    @if($errors->has('mpr_date'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('mpr_date') }}
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="required" for="reference_date">{{ trans('cruds.purchase_order_entry.fields.mpr_date') }}</label>
+                            <input class="form-control date {{ $errors->has('mpr_date') ? 'is-invalid' : '' }}" type="text" name="mpr_date" id="mpr_date" value="{{ old('mpr_date') }}" required>
+                            @if($errors->has('mpr_date'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('mpr_date') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.purchase_order_entry.fields.mpr_date_helper') }}</span>
                         </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.purchase_order_entry.fields.mpr_date_helper') }}</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -60,8 +64,8 @@
 
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="reference_date">{{ trans('cruds.purchase_order_entry.fields.purchase_order_date') }}</label>
-                            <input class="form-control date {{ $errors->has('purchase_order_date') ? 'is-invalid' : '' }}" type="text" name="purchase_order_date" id="purchase_order_date" value="{{ old('purchase_order_date') }}">
+                            <label class="required" for="purchase_order_date">{{ trans('cruds.purchase_order_entry.fields.purchase_order_date') }}</label>
+                            <input class="form-control date {{ $errors->has('purchase_order_date') ? 'is-invalid' : '' }}" type="text" name="purchase_order_date" id="purchase_order_date" value="{{ old('purchase_order_date') }}" required>
                             @if($errors->has('purchase_order_date'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('purchase_order_date') }}
@@ -73,8 +77,8 @@
 
                     <div class="col-2">
                         <div class="form-group">
-                            <label class="required" for="reference_no">{{ trans('cruds.purchase_order_entry.fields.reference_no') }}</label>
-                            <input class="form-control {{ $errors->has('reference_no') ? 'is-invalid' : '' }}" type="text" name="reference_no" id="reference_no" value="{{ old('reference_no', '') }}" required>
+                            <label for="reference_no">{{ trans('cruds.purchase_order_entry.fields.reference_no') }}</label>
+                            <input class="form-control {{ $errors->has('reference_no') ? 'is-invalid' : '' }}" type="text" name="reference_no" id="reference_no" value="{{ old('reference_no', '') }}">
                             @if($errors->has('reference_no'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('reference_no') }}
@@ -112,8 +116,8 @@
 
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="mpr_received_date">{{ trans('cruds.purchase_order_entry.fields.mpr_received_date') }}</label>
-                            <input class="form-control date {{ $errors->has('mpr_received_date') ? 'is-invalid' : '' }}" type="text" name="mpr_received_date" id="mpr_received_date" value="{{ old('mpr_received_date') }}">
+                            <label class="required" for="mpr_received_date">{{ trans('cruds.purchase_order_entry.fields.mpr_received_date') }}</label>
+                            <input class="form-control date {{ $errors->has('mpr_received_date') ? 'is-invalid' : '' }}" type="text" name="mpr_received_date" id="mpr_received_date" value="{{ old('mpr_received_date') }}" required>
                             @if($errors->has('mpr_received_date'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('mpr_received_date') }}
@@ -125,8 +129,8 @@
 
                     <div class="col-2">
                         <div class="form-group">
-                            <label class="required" for="place_of_loading">{{ trans('cruds.purchase_order_entry.fields.place_of_loading') }}</label>
-                            <input class="form-control {{ $errors->has('place_of_loading') ? 'is-invalid' : '' }}" type="text" name="place_of_loading" id="place_of_loading" value="{{ old('place_of_loading', '') }}" required>
+                            <label for="place_of_loading">{{ trans('cruds.purchase_order_entry.fields.place_of_loading') }}</label>
+                            <input class="form-control {{ $errors->has('place_of_loading') ? 'is-invalid' : '' }}" type="text" name="place_of_loading" id="place_of_loading" value="{{ old('place_of_loading', '') }}">
                             @if($errors->has('place_of_loading'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('place_of_loading') }}
@@ -138,8 +142,8 @@
 
                     <div class="col-2">
                         <div class="form-group">
-                            <label class="required" for="mode_of_transport">{{ trans('cruds.purchase_order_entry.fields.mode_of_transport') }}</label>
-                            <input class="form-control {{ $errors->has('created_stamp') ? 'is-invalid' : '' }}" type="text" name="mode_of_transport" id="mode_of_transport" value="{{ old('mode_of_transport', '') }}" required>
+                            <label for="mode_of_transport">{{ trans('cruds.purchase_order_entry.fields.mode_of_transport') }}</label>
+                            <input class="form-control {{ $errors->has('created_stamp') ? 'is-invalid' : '' }}" type="text" name="mode_of_transport" id="mode_of_transport" value="{{ old('mode_of_transport', '') }}">
                             @if($errors->has('mode_of_transport'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('mode_of_transport') }}
@@ -254,8 +258,8 @@
 
                     <div class="col-12">
                         <div class="form-group">
-                            <label class="required" for="delivery_term">{{ trans('cruds.purchase_order_entry.fields.delivery_term') }}</label>
-                            <input class="form-control {{ $errors->has('delivery_term') ? 'is-invalid' : '' }}" type="text" name="delivery_term" id="delivery_term" value="{{ old('delivery_term', '') }}" required>
+                            <label for="delivery_term">{{ trans('cruds.purchase_order_entry.fields.delivery_term') }}</label>
+                            <input class="form-control {{ $errors->has('delivery_term') ? 'is-invalid' : '' }}" type="text" name="delivery_term" id="delivery_term" value="{{ old('delivery_term', '') }}">
                             @if($errors->has('delivery_term'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('delivery_term') }}
@@ -279,7 +283,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label class="required" for="payment_type">{{ trans('cruds.purchase_order_entry.fields.payment_type') }}</label>
-                            <select class="form-control select2 {{ $errors->has('department_id') ? 'is-invalid' : '' }}" name="payment_type" id="payment_type" required>
+                            <select class="form-control select2 {{ $errors->has('department_id') ? 'is-invalid' : '' }}" name="payment_type" id="payment_type">
                                 {{--  @foreach($created_bies as $id => $entry)--}}
                                 {{--     <option value="{{ $id }}" {{ old('created_by') == $id ? 'selected' : '' }}>{{ $entry }}</option>--}}
                                 {{--  @endforeach--}}
@@ -308,8 +312,8 @@
 
                     <div class="col-12">
                         <div class="form-group">
-                            <label class="required" for="payment_term">{{ trans('cruds.purchase_order_entry.fields.payment_term') }}</label>
-                            <input class="form-control {{ $errors->has('payment_term') ? 'is-invalid' : '' }}" type="text" name="payment_term" id="payment_term" value="{{ old('payment_term', '') }}" required>
+                            <label for="payment_term">{{ trans('cruds.purchase_order_entry.fields.payment_term') }}</label>
+                            <input class="form-control {{ $errors->has('payment_term') ? 'is-invalid' : '' }}" type="text" name="payment_term" id="payment_term" value="{{ old('payment_term', '') }}">
                             @if($errors->has('payment_term'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('payment_term') }}
@@ -331,11 +335,10 @@
 
             <div class="card-body" id="product-rows">
                 <div class="row product-row">
-                    <!-- Your input fields here -->
                     <div class="col-4">
                         <div class="form-group">
                             <label class="required" for="item_name">{{ trans('cruds.purchase_order_entry.fields.item_name') }}</label>
-                            <input class="form-control" type="text" name="item_name[]" id="item_name" required>
+                            <input class="form-control" type="text" name="item_name[]"  id="item_name" required>
                         </div>
                     </div>
                     <div class="col-1">
@@ -353,31 +356,31 @@
                     <div class="col-1">
                         <div class="form-group">
                             <label for="origin">{{ trans('cruds.purchase_order_entry.fields.origin') }}</label>
-                            <input class="form-control" type="text" name="origin[]" id="origin">
+                            <input class="form-control" type="text" name="origin[]" value="{{ old('origin', '') }}" id="origin">
                         </div>
                     </div>
                     <div class="col-1">
                         <div class="form-group">
-                            <label for="quantity">{{ trans('cruds.purchase_order_entry.fields.quantity') }}</label>
-                            <input class="form-control" type="text" name="quantity[]" id="quantity">
+                            <label class="required" class="required" for="quantity">{{ trans('cruds.purchase_order_entry.fields.quantity') }}</label>
+                            <input class="form-control" type="number" name="quantity[]" value="{{ old('quantity', '') }}" id="quantity" required>
                         </div>
                     </div>
                     <div class="col-1">
                         <div class="form-group">
-                            <label for="uom">{{ trans('cruds.purchase_order_entry.fields.uom') }}</label>
-                            <input class="form-control" type="text" name="uom[]" id="uom">
+                            <label class="required" for="uom">{{ trans('cruds.purchase_order_entry.fields.uom') }}</label>
+                            <input class="form-control" type="text" name="uom[]" value="{{ old('uom', '') }}" id="uom" required>
                         </div>
                     </div>
                     <div class="col-1">
                         <div class="form-group">
-                            <label for="unit_price">{{ trans('cruds.purchase_order_entry.fields.unit_price') }}</label>
-                            <input class="form-control" type="text" name="unit_price[]" id="unit_price">
+                            <label class="required" for="unit_price">{{ trans('cruds.purchase_order_entry.fields.unit_price') }}</label>
+                            <input class="form-control" type="text" name="unit_price[]" value="{{ old('unit_price', '') }}" id="unit_price" required>
                         </div>
                     </div>
                     <div class="col-1">
                         <div class="form-group">
                             <label for="total_price">{{ trans('cruds.purchase_order_entry.fields.total_price') }}</label>
-                            <input class="form-control" type="text" name="total_price[]" id="total_price">
+                            <input class="form-control" type="text" name="total_price[]" value="{{ old('total_price', '') }}" id="total_price">
                         </div>
                     </div>
                     <div class="col-1">
