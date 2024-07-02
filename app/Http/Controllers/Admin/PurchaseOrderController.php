@@ -238,6 +238,6 @@ class PurchaseOrderController extends Controller
 
     public function purchaseOrderEntryStore(PurchaseOrderEntryRequest $request)
     {
-        return $request->all();
+        return $request->product_details;
     }
 }

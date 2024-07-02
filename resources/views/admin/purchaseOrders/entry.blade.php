@@ -338,7 +338,7 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label class="required" for="item_name">{{ trans('cruds.purchase_order_entry.fields.item_name') }}</label>
-                            <input class="form-control" type="text" name="item_name[]"  id="item_name" required>
+                            <input class="form-control" type="text" name="item_name[]" id="item_name" required>
                         </div>
                     </div>
                     <div class="col-1">
@@ -356,31 +356,31 @@
                     <div class="col-1">
                         <div class="form-group">
                             <label for="origin">{{ trans('cruds.purchase_order_entry.fields.origin') }}</label>
-                            <input class="form-control" type="text" name="origin[]" value="{{ old('origin', '') }}" id="origin">
+                            <input class="form-control" type="text" name="origin[]" id="origin">
                         </div>
                     </div>
                     <div class="col-1">
                         <div class="form-group">
-                            <label class="required" class="required" for="quantity">{{ trans('cruds.purchase_order_entry.fields.quantity') }}</label>
-                            <input class="form-control" type="number" name="quantity[]" value="{{ old('quantity', '') }}" id="quantity" required>
+                            <label class="required" for="quantity">{{ trans('cruds.purchase_order_entry.fields.quantity') }}</label>
+                            <input class="form-control" type="number" name="quantity[]" id="quantity" required>
                         </div>
                     </div>
                     <div class="col-1">
                         <div class="form-group">
                             <label class="required" for="uom">{{ trans('cruds.purchase_order_entry.fields.uom') }}</label>
-                            <input class="form-control" type="text" name="uom[]" value="{{ old('uom', '') }}" id="uom" required>
+                            <input class="form-control" type="text" name="uom[]" id="uom" required>
                         </div>
                     </div>
                     <div class="col-1">
                         <div class="form-group">
                             <label class="required" for="unit_price">{{ trans('cruds.purchase_order_entry.fields.unit_price') }}</label>
-                            <input class="form-control" type="text" name="unit_price[]" value="{{ old('unit_price', '') }}" id="unit_price" required>
+                            <input class="form-control" type="text" name="unit_price[]" id="unit_price" required>
                         </div>
                     </div>
                     <div class="col-1">
                         <div class="form-group">
                             <label for="total_price">{{ trans('cruds.purchase_order_entry.fields.total_price') }}</label>
-                            <input class="form-control" type="text" name="total_price[]" value="{{ old('total_price', '') }}" id="total_price">
+                            <input class="form-control" type="text" name="total_price[]" id="total_price" disabled>
                         </div>
                     </div>
                     <div class="col-1">
@@ -389,6 +389,7 @@
                     </div>
                 </div>
             </div>
+            <input type="hidden" name="product_details" id="product_details">
         </div>
 
         <div class="card">
@@ -505,9 +506,36 @@
             $('.remove-row').prop('disabled', $('.product-row').length === 1);
         }
 
+        function calculateTotalPrice(row) {
+            var quantity = parseFloat(row.find('#quantity').val()) || 0;
+            var unit_price = parseFloat(row.find('#unit_price').val()) || 0;
+            var total_price = quantity * unit_price;
+            row.find('#total_price').val(total_price.toFixed(2));
+        }
+
+        function gatherProductDetails() {
+            var productDetails = [];
+            $('.product-row').each(function() {
+                var row = $(this);
+                var product = {
+                    item_name: row.find('#item_name').val(),
+                    size_capacity: row.find('#size_capacity').val(),
+                    brand: row.find('#brand').val(),
+                    origin: row.find('#origin').val(),
+                    quantity: row.find('#quantity').val(),
+                    uom: row.find('#uom').val(),
+                    unit_price: row.find('#unit_price').val(),
+                    total_price: row.find('#total_price').val()
+                };
+                productDetails.push(product);
+            });
+            $('#product_details').val(JSON.stringify(productDetails));
+        }
+
         $(document).on('click', '.add-row', function() {
             var newRow = $(this).closest('.product-row').clone();
             newRow.find('input').val('');
+            newRow.find('#total_price').prop('disabled', true);
             newRow.appendTo('#product-rows');
             updateRemoveButtons();
         });
@@ -517,6 +545,15 @@
                 $(this).closest('.product-row').remove();
                 updateRemoveButtons();
             }
+        });
+
+        $(document).on('input', '#quantity, #unit_price', function() {
+            var row = $(this).closest('.product-row');
+            calculateTotalPrice(row);
+        });
+
+        $('form').on('submit', function(e) {
+            gatherProductDetails();
         });
 
         updateRemoveButtons();
