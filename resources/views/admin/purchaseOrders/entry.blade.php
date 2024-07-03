@@ -334,60 +334,119 @@
             </div>
 
             <div class="card-body" id="product-rows">
-                <div class="row product-row">
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label class="required" for="item_name">{{ trans('cruds.purchase_order_entry.fields.item_name') }}</label>
-                            <input class="form-control" type="text" name="item_name[]" id="item_name" required>
+                @if(old('product_details'))
+                    @foreach(json_decode(old('product_details'), true) as $index => $product)
+                        <div class="row product-row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="required" for="item_name">{{ trans('cruds.purchase_order_entry.fields.item_name') }}</label>
+                                    <input class="form-control" type="text" name="item_name[]" value="{{ $product['item_name'] }}" required>
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <div class="form-group">
+                                    <label for="size_capacity">{{ trans('cruds.purchase_order_entry.fields.size_capacity') }}</label>
+                                    <input class="form-control" type="text" name="size_capacity[]" value="{{ $product['size_capacity'] }}">
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <div class="form-group">
+                                    <label for="brand">{{ trans('cruds.purchase_order_entry.fields.brand') }}</label>
+                                    <input class="form-control" type="text" name="brand[]" value="{{ $product['brand'] }}">
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <div class="form-group">
+                                    <label for="origin">{{ trans('cruds.purchase_order_entry.fields.origin') }}</label>
+                                    <input class="form-control" type="text" name="origin[]" value="{{ $product['origin'] }}">
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <div class="form-group">
+                                    <label class="required" for="quantity">{{ trans('cruds.purchase_order_entry.fields.quantity') }}</label>
+                                    <input class="form-control" type="number" name="quantity[]" value="{{ $product['quantity'] }}" required>
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <div class="form-group">
+                                    <label class="required" for="uom">{{ trans('cruds.purchase_order_entry.fields.uom') }}</label>
+                                    <input class="form-control" type="text" name="uom[]" value="{{ $product['uom'] }}" required>
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <div class="form-group">
+                                    <label class="required" for="unit_price">{{ trans('cruds.purchase_order_entry.fields.unit_price') }}</label>
+                                    <input class="form-control" type="text" name="unit_price[]" value="{{ $product['unit_price'] }}" required>
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <div class="form-group">
+                                    <label for="total_price">{{ trans('cruds.purchase_order_entry.fields.total_price') }}</label>
+                                    <input class="form-control" type="text" name="total_price[]" value="{{ $product['total_price'] }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <button type="button" class="btn btn-success add-row" style="margin: 5px">+</button>
+                                <button type="button" class="btn btn-danger remove-row" style="margin: 5px">-</button>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <div class="row product-row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label class="required" for="item_name">{{ trans('cruds.purchase_order_entry.fields.item_name') }}</label>
+                                <input class="form-control" type="text" name="item_name[]" id="item_name" required>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="form-group">
+                                <label for="size_capacity">{{ trans('cruds.purchase_order_entry.fields.size_capacity') }}</label>
+                                <input class="form-control" type="text" name="size_capacity[]" id="size_capacity">
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="form-group">
+                                <label for="brand">{{ trans('cruds.purchase_order_entry.fields.brand') }}</label>
+                                <input class="form-control" type="text" name="brand[]" id="brand">
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="form-group">
+                                <label for="origin">{{ trans('cruds.purchase_order_entry.fields.origin') }}</label>
+                                <input class="form-control" type="text" name="origin[]" id="origin">
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="form-group">
+                                <label class="required" for="quantity">{{ trans('cruds.purchase_order_entry.fields.quantity') }}</label>
+                                <input class="form-control" type="number" name="quantity[]" id="quantity" required>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="form-group">
+                                <label class="required" for="uom">{{ trans('cruds.purchase_order_entry.fields.uom') }}</label>
+                                <input class="form-control" type="text" name="uom[]" id="uom" required>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="form-group">
+                                <label class="required" for="unit_price">{{ trans('cruds.purchase_order_entry.fields.unit_price') }}</label>
+                                <input class="form-control" type="text" name="unit_price[]" id="unit_price" required>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="form-group">
+                                <label for="total_price">{{ trans('cruds.purchase_order_entry.fields.total_price') }}</label>
+                                <input class="form-control" type="text" name="total_price[]" id="total_price" disabled>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <button type="button" class="btn btn-success add-row" style="margin: 5px">+</button>
+                            <button type="button" class="btn btn-danger remove-row" style="margin: 5px" disabled>-</button>
                         </div>
                     </div>
-                    <div class="col-1">
-                        <div class="form-group">
-                            <label for="size_capacity">{{ trans('cruds.purchase_order_entry.fields.size_capacity') }}</label>
-                            <input class="form-control" type="text" name="size_capacity[]" id="size_capacity">
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        <div class="form-group">
-                            <label for="brand">{{ trans('cruds.purchase_order_entry.fields.brand') }}</label>
-                            <input class="form-control" type="text" name="brand[]" id="brand">
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        <div class="form-group">
-                            <label for="origin">{{ trans('cruds.purchase_order_entry.fields.origin') }}</label>
-                            <input class="form-control" type="text" name="origin[]" id="origin">
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        <div class="form-group">
-                            <label class="required" for="quantity">{{ trans('cruds.purchase_order_entry.fields.quantity') }}</label>
-                            <input class="form-control" type="number" name="quantity[]" id="quantity" required>
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        <div class="form-group">
-                            <label class="required" for="uom">{{ trans('cruds.purchase_order_entry.fields.uom') }}</label>
-                            <input class="form-control" type="text" name="uom[]" id="uom" required>
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        <div class="form-group">
-                            <label class="required" for="unit_price">{{ trans('cruds.purchase_order_entry.fields.unit_price') }}</label>
-                            <input class="form-control" type="text" name="unit_price[]" id="unit_price" required>
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        <div class="form-group">
-                            <label for="total_price">{{ trans('cruds.purchase_order_entry.fields.total_price') }}</label>
-                            <input class="form-control" type="text" name="total_price[]" id="total_price" disabled>
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        <button type="button" class="btn btn-success add-row" style="margin: 5px">+</button>
-                        <button type="button" class="btn btn-danger remove-row" style="margin: 5px" disabled>-</button>
-                    </div>
-                </div>
+                @endif
             </div>
             <input type="hidden" name="product_details" id="product_details">
         </div>
@@ -507,10 +566,10 @@
         }
 
         function calculateTotalPrice(row) {
-            var quantity = parseFloat(row.find('#quantity').val()) || 0;
-            var unit_price = parseFloat(row.find('#unit_price').val()) || 0;
+            var quantity = parseFloat(row.find('input[name="quantity[]"]').val()) || 0;
+            var unit_price = parseFloat(row.find('input[name="unit_price[]"]').val()) || 0;
             var total_price = quantity * unit_price;
-            row.find('#total_price').val(total_price.toFixed(2));
+            row.find('input[name="total_price[]"]').val(total_price.toFixed(2));
         }
 
         function gatherProductDetails() {
@@ -518,14 +577,14 @@
             $('.product-row').each(function() {
                 var row = $(this);
                 var product = {
-                    item_name: row.find('#item_name').val(),
-                    size_capacity: row.find('#size_capacity').val(),
-                    brand: row.find('#brand').val(),
-                    origin: row.find('#origin').val(),
-                    quantity: row.find('#quantity').val(),
-                    uom: row.find('#uom').val(),
-                    unit_price: row.find('#unit_price').val(),
-                    total_price: row.find('#total_price').val()
+                    item_name: row.find('input[name="item_name[]"]').val(),
+                    size_capacity: row.find('input[name="size_capacity[]"]').val(),
+                    brand: row.find('input[name="brand[]"]').val(),
+                    origin: row.find('input[name="origin[]"]').val(),
+                    quantity: row.find('input[name="quantity[]"]').val(),
+                    uom: row.find('input[name="uom[]"]').val(),
+                    unit_price: row.find('input[name="unit_price[]"]').val(),
+                    total_price: row.find('input[name="total_price[]"]').val()
                 };
                 productDetails.push(product);
             });
@@ -535,7 +594,7 @@
         $(document).on('click', '.add-row', function() {
             var newRow = $(this).closest('.product-row').clone();
             newRow.find('input').val('');
-            newRow.find('#total_price').prop('disabled', true);
+            newRow.find('input[name="total_price[]"]').prop('disabled', true);
             newRow.appendTo('#product-rows');
             updateRemoveButtons();
         });
@@ -547,12 +606,12 @@
             }
         });
 
-        $(document).on('input', '#quantity, #unit_price', function() {
+        $(document).on('input', 'input[name="quantity[]"], input[name="unit_price[]"]', function() {
             var row = $(this).closest('.product-row');
             calculateTotalPrice(row);
         });
 
-        $('form').on('submit', function(e) {
+        $('form').on('submit', function() {
             gatherProductDetails();
         });
 

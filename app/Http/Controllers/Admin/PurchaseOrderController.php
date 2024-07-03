@@ -229,8 +229,9 @@ class PurchaseOrderController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function purchaseOrderEntry()
+    public function purchaseOrderEntry(Request $request)
     {
+        //$request->session()->forget('product_details');
         $department = Department::pluck('department_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.purchaseOrders.entry', compact( 'department'));
@@ -238,6 +239,13 @@ class PurchaseOrderController extends Controller
 
     public function purchaseOrderEntryStore(PurchaseOrderEntryRequest $request)
     {
-        return $request->product_details;
+        //return $request->all();
+        //return $request->product_details;
+
+        $request->session()->put('product_details', json_decode($request->product_details));
+
+        //dd($request->session()->get('product_details'));
+
+        return redirect()->back()->withInput();
     }
 }
