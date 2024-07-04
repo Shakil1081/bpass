@@ -10,13 +10,13 @@
 
             <div class="card-body">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="form-group">
                             <label class="required" for="created_by">{{ trans('cruds.purchase_order_entry.fields.department_id') }}</label>
                             <select class="form-control select2 {{ $errors->has('department_id') ? 'is-invalid' : '' }}" name="department_id" id="department_id" required>
-                                  @foreach($department as $id => $entry)
-                                     <option value="{{ $id }}" {{ old('created_by') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                  @endforeach
+                                @foreach($department as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('created_by') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
                             </select>
                             @if($errors->has('department_id'))
                                 <div class="invalid-feedback">
@@ -26,7 +26,7 @@
                             <span class="help-block">{{ trans('cruds.purchase_order_entry.fields.department_id_helper') }}</span>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="form-group">
                             <label class="required" for="reference_date">{{ trans('cruds.purchase_order_entry.fields.mpr_date') }}</label>
                             <input class="form-control date {{ $errors->has('mpr_date') ? 'is-invalid' : '' }}" type="text" name="mpr_date" id="mpr_date" value="{{ old('mpr_date') }}" required>
@@ -36,6 +36,19 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.purchase_order_entry.fields.mpr_date_helper') }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label class="required" for="budget_ref_no">{{ trans('cruds.purchase_order_entry.fields.budget_ref_no') }}</label>
+                            <input class="form-control {{ $errors->has('budget_ref_no') ? 'is-invalid' : '' }}" type="text" name="budget_ref_no" id="budget_ref_no" value="{{ old('budget_ref_no') }}" required>
+                            @if($errors->has('budget_ref_no'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('budget_ref_no') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.purchase_order_entry.fields.budget_ref_no_helper') }}</span>
                         </div>
                     </div>
                 </div>
@@ -51,7 +64,7 @@
                     <div class="col-2">
                         <div class="form-group">
                             <label class="required" for="created_stamp">{{ trans('cruds.purchase_order_entry.fields.purchase_order') }}</label>
-                            <input class="form-control {{ $errors->has('purchase_order') ? 'is-invalid' : '' }}" type="text" name="purchase_order" id="purchase_order" value="{{ old('purchase_order', '') }}" required>
+                            <input class="form-control {{ $errors->has('purchase_order') ? 'is-invalid' : '' }}" type="text" id="purchase_order" name="purchase_order" value="{{ old('purchase_order', '') }}" readonly>
                             @if($errors->has('purchase_order'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('purchase_order') }}
@@ -63,9 +76,12 @@
 
 
                     <div class="col-2">
+                        @php
+                            $today = \Carbon\Carbon::today()->format('d/m/Y');
+                        @endphp
                         <div class="form-group">
                             <label class="required" for="purchase_order_date">{{ trans('cruds.purchase_order_entry.fields.purchase_order_date') }}</label>
-                            <input class="form-control date {{ $errors->has('purchase_order_date') ? 'is-invalid' : '' }}" type="text" name="purchase_order_date" id="purchase_order_date" value="{{ old('purchase_order_date') }}" required>
+                            <input class="form-control {{ $errors->has('purchase_order_date') ? 'is-invalid' : '' }}" type="text" name="purchase_order_date" value="{{ $today }}" readonly>
                             @if($errors->has('purchase_order_date'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('purchase_order_date') }}
@@ -284,9 +300,9 @@
                         <div class="form-group">
                             <label class="required" for="payment_type">{{ trans('cruds.purchase_order_entry.fields.payment_type') }}</label>
                             <select class="form-control select2 {{ $errors->has('department_id') ? 'is-invalid' : '' }}" name="payment_type" id="payment_type">
-                                {{--  @foreach($created_bies as $id => $entry)--}}
-                                {{--     <option value="{{ $id }}" {{ old('created_by') == $id ? 'selected' : '' }}>{{ $entry }}</option>--}}
-                                {{--  @endforeach--}}
+                                  @foreach(trans('cruds.purchase_order_entry.dropdowns.payment_type') as $paymentType)
+                                     <option value="{{ $paymentType }}" {{ old('payment_type') == $paymentType ? 'selected' : '' }}>{{ $paymentType }}</option>
+                                  @endforeach
                             </select>
                             @if($errors->has('payment_type'))
                                 <div class="invalid-feedback">
@@ -337,7 +353,8 @@
                 @if(old('product_details'))
                     @foreach(json_decode(old('product_details'), true) as $index => $product)
                         <div class="row product-row">
-                            <div class="col-4">
+                            <!-- Add your form fields here as in the previous example -->
+                            <div class="col-2">
                                 <div class="form-group">
                                     <label class="required" for="item_name">{{ trans('cruds.purchase_order_entry.fields.item_name') }}</label>
                                     <input class="form-control" type="text" name="item_name[]" value="{{ $product['item_name'] }}" required>
@@ -364,7 +381,7 @@
                             <div class="col-1">
                                 <div class="form-group">
                                     <label class="required" for="quantity">{{ trans('cruds.purchase_order_entry.fields.quantity') }}</label>
-                                    <input class="form-control" type="number" name="quantity[]" value="{{ $product['quantity'] }}" required>
+                                    <input class="form-control quantity" type="number" name="quantity[]" value="{{ $product['quantity'] }}" required>
                                 </div>
                             </div>
                             <div class="col-1">
@@ -376,15 +393,30 @@
                             <div class="col-1">
                                 <div class="form-group">
                                     <label class="required" for="unit_price">{{ trans('cruds.purchase_order_entry.fields.unit_price') }}</label>
-                                    <input class="form-control" type="text" name="unit_price[]" value="{{ $product['unit_price'] }}" required>
+                                    <input class="form-control unit_price" type="text" name="unit_price[]" value="{{ $product['unit_price'] }}" required>
                                 </div>
                             </div>
                             <div class="col-1">
                                 <div class="form-group">
                                     <label for="total_price">{{ trans('cruds.purchase_order_entry.fields.total_price') }}</label>
-                                    <input class="form-control" type="text" name="total_price[]" value="{{ $product['total_price'] }}" disabled>
+                                    <input class="form-control total_price" type="text" name="total_price[]" value="{{ $product['total_price'] }}" disabled>
                                 </div>
                             </div>
+
+                            <div class="col-1">
+                                <div class="form-group">
+                                    <label for="budget_amount">{{ trans('cruds.purchase_order_entry.fields.budget_amount') }}</label>
+                                    <input class="form-control budget_amount" type="text" name="budget_amount[]" value="{{ $product['budget_amount'] }}" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-1">
+                                <div class="form-group">
+                                    <label for="remaining_budget">{{ trans('cruds.purchase_order_entry.fields.remaining_budget') }}</label>
+                                    <input class="form-control remaining_budget" type="text" name="remaining_budget[]" value="{{ $product['remaining_budget'] }}" disabled>
+                                </div>
+                            </div>
+
                             <div class="col-1">
                                 <button type="button" class="btn btn-success add-row" style="margin: 5px">+</button>
                                 <button type="button" class="btn btn-danger remove-row" style="margin: 5px">-</button>
@@ -393,7 +425,8 @@
                     @endforeach
                 @else
                     <div class="row product-row">
-                        <div class="col-4">
+                        <!-- Add your form fields here as in the previous example -->
+                        <div class="col-2">
                             <div class="form-group">
                                 <label class="required" for="item_name">{{ trans('cruds.purchase_order_entry.fields.item_name') }}</label>
                                 <input class="form-control" type="text" name="item_name[]" id="item_name" required>
@@ -420,7 +453,7 @@
                         <div class="col-1">
                             <div class="form-group">
                                 <label class="required" for="quantity">{{ trans('cruds.purchase_order_entry.fields.quantity') }}</label>
-                                <input class="form-control" type="number" name="quantity[]" id="quantity" required>
+                                <input class="form-control quantity" type="number" name="quantity[]" id="quantity" required>
                             </div>
                         </div>
                         <div class="col-1">
@@ -432,15 +465,30 @@
                         <div class="col-1">
                             <div class="form-group">
                                 <label class="required" for="unit_price">{{ trans('cruds.purchase_order_entry.fields.unit_price') }}</label>
-                                <input class="form-control" type="text" name="unit_price[]" id="unit_price" required>
+                                <input class="form-control unit_price" type="text" name="unit_price[]" id="unit_price" required>
                             </div>
                         </div>
                         <div class="col-1">
                             <div class="form-group">
                                 <label for="total_price">{{ trans('cruds.purchase_order_entry.fields.total_price') }}</label>
-                                <input class="form-control" type="text" name="total_price[]" id="total_price" disabled>
+                                <input class="form-control total_price" type="text" name="total_price[]" id="total_price" disabled>
                             </div>
                         </div>
+
+                        <div class="col-1">
+                            <div class="form-group">
+                                <label for="budget_amount">{{ trans('cruds.purchase_order_entry.fields.budget_amount') }}</label>
+                                <input class="form-control budget_amount" type="text" name="budget_amount[]" id="budget_amount" disabled>
+                            </div>
+                        </div>
+
+                        <div class="col-1">
+                            <div class="form-group">
+                                <label for="remaining_budget">{{ trans('cruds.purchase_order_entry.fields.remaining_budget') }}</label>
+                                <input class="form-control remaining_budget" type="text" name="remaining_budget[]" id="remaining_budget" disabled>
+                            </div>
+                        </div>
+
                         <div class="col-1">
                             <button type="button" class="btn btn-success add-row" style="margin: 5px">+</button>
                             <button type="button" class="btn btn-danger remove-row" style="margin: 5px" disabled>-</button>
@@ -461,7 +509,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label class="required" for="total_amount">{{ trans('cruds.purchase_order_entry.fields.total_amount') }}</label>
-                            <input class="form-control {{ $errors->has('total_amount') ? 'is-invalid' : '' }}" type="text" name="total_amount" id="total_amount" value="{{ old('total_amount', '') }}" required>
+                            <input class="form-control {{ $errors->has('total_amount') ? 'is-invalid' : '' }}" type="text" name="total_amount" id="total_amount" readonly>
                             @if($errors->has('total_amount'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('total_amount') }}
@@ -474,7 +522,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label for="discount_amount">{{ trans('cruds.purchase_order_entry.fields.discount_amount') }}</label>
-                            <input class="form-control {{ $errors->has('discount_amount') ? 'is-invalid' : '' }}" type="text" name="discount_amount" id="discount_amount" value="{{ old('discount_amount', '') }}">
+                            <input class="form-control {{ $errors->has('discount_amount') ? 'is-invalid' : '' }}" type="number" name="discount_amount" id="discount_amount" value="{{ old('discount_amount', '') }}">
                             @if($errors->has('discount_amount'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('discount_amount') }}
@@ -487,7 +535,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label for="carrying_loading_uploading_amount">{{ trans('cruds.purchase_order_entry.fields.carrying_loading_uploading_amount') }}</label>
-                            <input class="form-control {{ $errors->has('credit_period') ? 'is-invalid' : '' }}" type="text" name="carrying_loading_uploading_amount" id="carrying_loading_uploading_amount" value="{{ old('carrying_loading_uploading_amount', '') }}">
+                            <input class="form-control {{ $errors->has('credit_period') ? 'is-invalid' : '' }}" type="number" name="carrying_loading_uploading_amount" id="carrying_loading_uploading_amount" value="{{ old('carrying_loading_uploading_amount', '') }}">
                             @if($errors->has('carrying_loading_uploading_amount'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('carrying_loading_uploading_amount') }}
@@ -500,7 +548,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label class="required" for="net_payable_amount">{{ trans('cruds.purchase_order_entry.fields.net_payable_amount') }}</label>
-                            <input class="form-control {{ $errors->has('net_payable_amount') ? 'is-invalid' : '' }}" type="text" name="net_payable_amount" id="net_payable_amount" value="{{ old('net_payable_amount', '') }}" required>
+                            <input class="form-control {{ $errors->has('net_payable_amount') ? 'is-invalid' : '' }}" type="text" name="net_payable_amount" id="net_payable_amount" readonly>
                             @if($errors->has('net_payable_amount'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('net_payable_amount') }}
@@ -510,19 +558,18 @@
                         </div>
                     </div>
 
-{{--                    <div class="col-12">--}}
-{{--                        <div class="form-group">--}}
-{{--                            <label class="required" for="in_words">{{ trans('cruds.purchase_order_entry.fields.in_words') }}</label>--}}
-{{--                            <input class="form-control {{ $errors->has('in_words') ? 'is-invalid' : '' }}" type="text" name="in_words" id="in_words" value="{{ old('in_words', '') }}" required>--}}
-{{--                            @if($errors->has('in_words'))--}}
-{{--                                <div class="invalid-feedback">--}}
-{{--                                    {{ $errors->first('in_words') }}--}}
-{{--                                </div>--}}
-{{--                            @endif--}}
-{{--                            <span class="help-block">{{ trans('cruds.purchase_order_entry.fields.in_words_helper') }}</span>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="required" for="in_words">{{ trans('cruds.purchase_order_entry.fields.in_words') }}</label>
+                            <input class="form-control {{ $errors->has('in_words') ? 'is-invalid' : '' }}" type="text" name="in_words" id="in_words" value="{{ old('in_words', '') }}" required readonly>
+                            @if($errors->has('in_words'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('in_words') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.purchase_order_entry.fields.in_words_helper') }}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -531,23 +578,58 @@
         <div class="card">
             <div class="card-header">
                 Add {{ trans('cruds.purchase_order_entry.fields.terms_and_conditions') }}
+                <button type="button" class="btn btn-success btn-sm float-right" id="addTermsButton">Add</button>
             </div>
 
             <div class="card-body">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label class="required" for="terms_and_conditions">{{ trans('cruds.purchase_order_entry.fields.terms_and_conditions') }}</label>
-                            <input class="form-control {{ $errors->has('terms_and_conditions') ? 'is-invalid' : '' }}" type="text" name="terms_and_conditions" id="terms_and_conditions" value="{{ old('terms_and_conditions', '') }}" required>
-                            @if($errors->has('terms_and_conditions'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('terms_and_conditions') }}
+                @if(old('terms_and_conditions'))
+                    @foreach(old('terms_and_conditions') as $toc)
+                        <div class="row" id="termsContainer">
+                            <div class="col-12 terms-row">
+                                <div class="form-group">
+                                    @php
+                                        // print_r(old('terms_and_conditions'));
+                                        // print_r(session('terms_and_conditions'));
+                                        // exit();
+                                    @endphp
+                                    <label class="required" for="terms_and_conditions">{{ trans('cruds.purchase_order_entry.fields.terms_and_conditions') }}</label>
+                                    <div class="input-group">
+                                        <input class="form-control {{ $errors->has('terms_and_conditions') ? 'is-invalid' : '' }}" type="text" name="terms_and_conditions[]" value="{{ $toc }}" required>
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-danger btn-sm removeTermsButton" disabled>-</button>
+                                        </div>
+                                    </div>
+                                    @if($errors->has('terms_and_conditions'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('terms_and_conditions') }}
+                                        </div>
+                                    @endif
+                                    <span class="help-block">{{ trans('cruds.purchase_order_entry.fields.terms_and_conditions_helper') }}</span>
                                 </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.purchase_order_entry.fields.terms_and_conditions_helper') }}</span>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <div class="row" id="termsContainer">
+                        <div class="col-12 terms-row">
+                            <div class="form-group">
+                                <label class="required" for="terms_and_conditions">{{ trans('cruds.purchase_order_entry.fields.terms_and_conditions') }}</label>
+                                <div class="input-group">
+                                    <input class="form-control {{ $errors->has('terms_and_conditions') ? 'is-invalid' : '' }}" type="text" name="terms_and_conditions[]" value="{{ old('terms_and_conditions[]', '') }}" required>
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-danger btn-sm removeTermsButton" disabled>-</button>
+                                    </div>
+                                </div>
+                                @if($errors->has('terms_and_conditions'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('terms_and_conditions') }}
+                                    </div>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.purchase_order_entry.fields.terms_and_conditions_helper') }}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
 
@@ -559,6 +641,8 @@
     </form>
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/number-to-words"></script>
+
 <script>
     $(document).ready(function() {
         function updateRemoveButtons() {
@@ -570,6 +654,26 @@
             var unit_price = parseFloat(row.find('input[name="unit_price[]"]').val()) || 0;
             var total_price = quantity * unit_price;
             row.find('input[name="total_price[]"]').val(total_price.toFixed(2));
+        }
+
+        function calculateAndSetTotalAmount() {
+            var overallTotalPrice = 0;
+            $('.product-row').each(function() {
+                var row = $(this);
+                calculateTotalPrice(row);
+                var total_price = parseFloat(row.find('input[name="total_price[]"]').val()) || 0;
+                overallTotalPrice += total_price;
+            });
+
+            var discountAmount = parseFloat($('#discount_amount').val()) || 0;
+            var cluAmount = parseFloat($('#carrying_loading_uploading_amount').val()) || 0;
+
+            var finalTotalAmount = overallTotalPrice + cluAmount - discountAmount;
+
+            $('#total_amount').val(overallTotalPrice.toFixed(2));
+            $('#in_words').val(numberToWords.toWords(finalTotalAmount.toFixed(2)).toUpperCase());
+
+            $('#net_payable_amount').val(finalTotalAmount.toFixed(2));
         }
 
         function gatherProductDetails() {
@@ -584,7 +688,9 @@
                     quantity: row.find('input[name="quantity[]"]').val(),
                     uom: row.find('input[name="uom[]"]').val(),
                     unit_price: row.find('input[name="unit_price[]"]').val(),
-                    total_price: row.find('input[name="total_price[]"]').val()
+                    total_price: row.find('input[name="total_price[]"]').val(),
+                    budget_amount: row.find('input[name="budget_amount[]"]').val(),
+                    remaining_budget: row.find('input[name="remaining_budget[]"]').val()
                 };
                 productDetails.push(product);
             });
@@ -603,12 +709,18 @@
             if ($('.product-row').length > 1) {
                 $(this).closest('.product-row').remove();
                 updateRemoveButtons();
+                calculateAndSetTotalAmount();  // Recalculate total amount after a row is removed
             }
         });
 
         $(document).on('input', 'input[name="quantity[]"], input[name="unit_price[]"]', function() {
             var row = $(this).closest('.product-row');
             calculateTotalPrice(row);
+            calculateAndSetTotalAmount();  // Set total amount whenever an input changes
+        });
+
+        $(document).on('input', '#discount_amount, #carrying_loading_uploading_amount', function() {
+            calculateAndSetTotalAmount();
         });
 
         $('form').on('submit', function() {
@@ -616,8 +728,66 @@
         });
 
         updateRemoveButtons();
+        calculateAndSetTotalAmount();  // Initial calculation and setting of total amount
     });
 </script>
+
+
+<script>
+    $(document).ready(function() {
+        $('#department_id').change(function() {
+            var departmentId = $(this).val();
+            if(departmentId) {
+                $.ajax({
+                    url: '{{ route("admin.get-purchase-order") }}', // Update with your route
+                    type: 'GET',
+                    data: { department_id: departmentId },
+                    success: function(response) {
+                        if(response.success) {
+                            $('#purchase_order').val(response.purchase_order);
+                        } else {
+                            $('#purchase_order').val('');
+                        }
+                    },
+                    error: function() {
+
+                    }
+                });
+            } else {
+
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        function updateRemoveButtons() {
+            if ($('.terms-row').length > 1) {
+                $('.removeTermsButton').prop('disabled', false);
+            } else {
+                $('.removeTermsButton').prop('disabled', true);
+            }
+        }
+
+        $('#addTermsButton').click(function() {
+            var newRow = $('.terms-row:first').clone();
+            newRow.find('input').val('');
+            $('#termsContainer').append(newRow);
+            updateRemoveButtons();
+        });
+
+        $(document).on('click', '.removeTermsButton', function() {
+            if ($('.terms-row').length > 1) {
+                $(this).closest('.terms-row').remove();
+                updateRemoveButtons();
+            }
+        });
+
+        updateRemoveButtons();
+    });
+</script>
+
 @section('scripts')
 @endsection
 

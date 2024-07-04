@@ -796,6 +796,9 @@ return [
     'purchase_order_entry' => [
         'title'          => 'Purchase Order Entry',
         'title_singular' => 'Purchase Order Entry',
+        'dropdowns' => [
+            'payment_type' => ['A/C Pay Cheque','Cash Cheque','Cash','Credit','Pay Order']
+        ],
         'fields'         => [
             'id'                        => 'ID',
             'id_helper'                 => ' ',
@@ -803,6 +806,8 @@ return [
             'department_id_helper'      => ' ',
             'mpr_date'                  => 'MPR Date',
             'mpr_date_helper'           => ' ',
+            'budget_ref_no'                  => 'Budget Ref. No#',
+            'budget_ref_no_helper'           => ' ',
 
             'order_information'         => 'Order Information',
             'order_information_helper'           => ' ',
@@ -875,6 +880,10 @@ return [
             'unit_price_helper'       => ' ',
             'total_price'              => 'Total Price',
             'total_price_helper'       => ' ',
+            'budget_amount'              => 'Budget Amount',
+            'budget_amount_helper'       => ' ',
+            'remaining_budget'              => 'Remaining Budget',
+            'remaining_budget_helper'       => ' ',
 
             'payable_information'              => 'Payable Information',
             'payable_information_helper'       => ' ',

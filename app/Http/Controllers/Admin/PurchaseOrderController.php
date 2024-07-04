@@ -10,11 +10,14 @@ use App\Http\Requests\StorePurchaseOrderRequest;
 use App\Http\Requests\UpdatePurchaseOrderRequest;
 use App\Models\Department;
 use App\Models\Organization;
+use App\Models\Product;
 use App\Models\PurchaseOrder;
 use App\Models\Requisition;
 use App\Models\User;
+use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -237,15 +240,85 @@ class PurchaseOrderController extends Controller
         return view('admin.purchaseOrders.entry', compact( 'department'));
     }
 
+    public function getPurchaseOrder(Request $request)
+    {
+        $departmentId = $request->input('department_id');
+        $purchaseOrder = 'AFL-'.Carbon::today()->format('Ymd').'-'.rand(100,999).$departmentId;
+
+        if ($purchaseOrder) {
+            return response()->json([
+                'success' => true,
+                'purchase_order' => $purchaseOrder
+            ]);
+        } else {
+            return response()->json([
+                'success' => false
+            ]);
+        }
+    }
+
     public function purchaseOrderEntryStore(PurchaseOrderEntryRequest $request)
     {
-        //return $request->all();
-        //return $request->product_details;
-
         $request->session()->put('product_details', json_decode($request->product_details));
+        $request->session()->put('poeTerms', $request->terms_and_conditions);
 
-        //dd($request->session()->get('product_details'));
+        $requisition = Requisition::create([
+           'requisition_date' => Carbon::now()->format('d/m/Y'),
+           'updated_by_id' => Auth::user()->id,
+           'department_id' => $request->input('department_id'),
+        ]);
 
-        return redirect()->back()->withInput();
+        $purchaseOrder = PurchaseOrder::create([
+            'actual_payable_amount' => $request->input('net_payable_amount'),
+
+            'advance_amount' => $request->input('advance_amount'),
+
+            'amount_in_words' => $request->input('in_words'),
+            'carr_load_up_amount' => $request->input('carrying_loading_uploading_amount'),
+            'cell_no' => $request->input('supplier_cell_no'),
+
+            'credit_limit' => $request->input('credit_limit'),
+
+            'delivery_days' => $request->input('delivery_period'),
+            'delivery_term' => $request->input('delivery_term'),
+            'discount_amount' => $request->input('discount_amount'),
+            'email' => $request->input('supplier_email'),
+            'issue_date' => $request->input('mpr_date'),
+            'means_of_transport' => $request->input('mode_of_transport'),
+            'mpr_date' => $request->input('mpr_received_date'),
+            'mpr_no' => $request->input('mpr_no'),
+            'payment_term' => $request->input('payment_term'),
+
+            'payment_type' => $request->input('payment_type'),
+            'place_of_delivery' => $request->input('delivery_place'),
+            'place_of_lading' => $request->input('place_of_loading'),
+            'purchase_order_no' => $request->input('purchase_order'),
+            'reference_date' => $request->input('reference_date'),
+            'reference_no' => $request->input('reference_no'),
+            'supplier_address' => $request->input('supplier_address'),
+            'supplier' => $request->input('supplier'),
+            'supplier_name' => $request->input('supplier_name'),
+            'total_amount' => $request->input('total_amount'),
+            'vat_amount' => $request->input('vat_amount'),
+            'requisition_id' => $requisition->id,
+        ]);
+
+        $productDetails = json_decode($request->product_details);
+
+        foreach ($productDetails as $productDetail) {
+            Product::create([
+                'purchase_order_id' => $purchaseOrder->id,
+                'brand' => $productDetail->brand,
+                'item_name' => $productDetail->item_name,
+                'origin' => $productDetail->origin,
+                'quantity' => $productDetail->quantity,
+                'serial_no' => '',
+                'size_or_capacity' => $productDetail->size_capacity,
+                'unit_price' => $productDetail->unit_price,
+                'uom' => $productDetail->uom,
+            ]);
+        }
+
+        return redirect()->route('admin.purchase-orders.index');
     }
 }
