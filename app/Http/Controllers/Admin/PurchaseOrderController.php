@@ -8,6 +8,7 @@ use App\Http\Requests\MassDestroyPurchaseOrderRequest;
 use App\Http\Requests\PurchaseOrderEntryRequest;
 use App\Http\Requests\StorePurchaseOrderRequest;
 use App\Http\Requests\UpdatePurchaseOrderRequest;
+use App\Models\Budget;
 use App\Models\Department;
 use App\Models\Organization;
 use App\Models\Product;
@@ -255,6 +256,35 @@ class PurchaseOrderController extends Controller
                 'success' => false
             ]);
         }
+    }
+
+    public function getBudgetDetails(Request $request)
+    {
+        $departmentId = $request->input('department_id');
+
+        $budgetData = Budget::where('department_id', $departmentId)
+            ->where('valid_up_to','>=',Carbon::now()->format('Y-m-d'))
+            ->select('budget_amount','budget_remaining')->first();
+
+        if ($budgetData) {
+            return response()->json([
+                'success' => true,
+                'budget_data' => $budgetData
+            ]);
+        } else {
+            return response()->json([
+                'success' => false
+            ]);
+        }
+    }
+
+    public function calcBudgetRemaining(Request $request){
+        $remainingBudget = $request->input('budgetRemaining') - $request->input('netPayableAmount');
+
+        return response()->json([
+            'success' => true,
+            'remainingBudget' => $remainingBudget
+        ]);
     }
 
     public function purchaseOrderEntryStore(PurchaseOrderEntryRequest $request)

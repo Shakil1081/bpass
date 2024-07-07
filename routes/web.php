@@ -102,6 +102,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //new added
     Route::get('purchase-orders/entry', 'PurchaseOrderController@purchaseOrderEntry')->name('purchase-orders.entry');
     Route::get('purchase-orders/get-purchase-order', 'PurchaseOrderController@getPurchaseOrder')->name('get-purchase-order');
+    Route::get('purchase-orders/get-budget-details', 'PurchaseOrderController@getBudgetDetails')->name('get-budget-details');
+    Route::get('purchase-orders/calc_remaining-budget', 'PurchaseOrderController@calcBudgetRemaining')->name('calc_remaining-budget');
     Route::post('purchase-orders/entry/store', 'PurchaseOrderController@purchaseOrderEntryStore')->name('purchase-orders.entryStore');
 
     Route::resource('purchase-orders', 'PurchaseOrderController');

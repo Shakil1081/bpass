@@ -12,8 +12,8 @@
                 <div class="row">
                     <div class="col-4">
                         <div class="form-group">
-                            <label class="required" for="created_by">{{ trans('cruds.purchase_order_entry.fields.department_id') }}</label>
-                            <select class="form-control select2 {{ $errors->has('department_id') ? 'is-invalid' : '' }}" name="department_id" id="department_id" required>
+                            <label class="required" for="department_id">{{ trans('cruds.purchase_order_entry.fields.department_id') }}</label>
+                            <select class="form-control select2 {{ $errors->has('department_id') ? 'is-invalid' : '' }} department_id" name="department_id" id="department_id" required>
                                 @foreach($department as $id => $entry)
                                     <option value="{{ $id }}" {{ old('created_by') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                                 @endforeach
@@ -354,7 +354,7 @@
                     @foreach(json_decode(old('product_details'), true) as $index => $product)
                         <div class="row product-row">
                             <!-- Add your form fields here as in the previous example -->
-                            <div class="col-2">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label class="required" for="item_name">{{ trans('cruds.purchase_order_entry.fields.item_name') }}</label>
                                     <input class="form-control" type="text" name="item_name[]" value="{{ $product['item_name'] }}" required>
@@ -403,19 +403,19 @@
                                 </div>
                             </div>
 
-                            <div class="col-1">
-                                <div class="form-group">
-                                    <label for="budget_amount">{{ trans('cruds.purchase_order_entry.fields.budget_amount') }}</label>
-                                    <input class="form-control budget_amount" type="text" name="budget_amount[]" value="{{ $product['budget_amount'] }}" disabled>
-                                </div>
-                            </div>
+{{--                            <div class="col-1">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="budget_amount">{{ trans('cruds.purchase_order_entry.fields.budget_amount') }}</label>--}}
+{{--                                    <input class="form-control budget_amount" type="text" name="budget_amount[]" value="{{ $product['budget_amount'] }}" disabled>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                            <div class="col-1">
-                                <div class="form-group">
-                                    <label for="remaining_budget">{{ trans('cruds.purchase_order_entry.fields.remaining_budget') }}</label>
-                                    <input class="form-control remaining_budget" type="text" name="remaining_budget[]" value="{{ $product['remaining_budget'] }}" disabled>
-                                </div>
-                            </div>
+{{--                            <div class="col-1">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="remaining_budget">{{ trans('cruds.purchase_order_entry.fields.remaining_budget') }}</label>--}}
+{{--                                    <input class="form-control remaining_budget" type="text" name="remaining_budget[]" value="{{ $product['remaining_budget'] }}" disabled>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
                             <div class="col-1">
                                 <button type="button" class="btn btn-success add-row" style="margin: 5px">+</button>
@@ -426,7 +426,7 @@
                 @else
                     <div class="row product-row">
                         <!-- Add your form fields here as in the previous example -->
-                        <div class="col-2">
+                        <div class="col-4">
                             <div class="form-group">
                                 <label class="required" for="item_name">{{ trans('cruds.purchase_order_entry.fields.item_name') }}</label>
                                 <input class="form-control" type="text" name="item_name[]" id="item_name" required>
@@ -475,19 +475,19 @@
                             </div>
                         </div>
 
-                        <div class="col-1">
-                            <div class="form-group">
-                                <label for="budget_amount">{{ trans('cruds.purchase_order_entry.fields.budget_amount') }}</label>
-                                <input class="form-control budget_amount" type="text" name="budget_amount[]" id="budget_amount" disabled>
-                            </div>
-                        </div>
+{{--                        <div class="col-1">--}}
+{{--                            <div class="form-group">--}}
+{{--                                <label for="budget_amount">{{ trans('cruds.purchase_order_entry.fields.budget_amount') }}</label>--}}
+{{--                                <input class="form-control budget_amount" type="text" name="budget_amount[]" id="budget_amount" disabled>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
 
-                        <div class="col-1">
-                            <div class="form-group">
-                                <label for="remaining_budget">{{ trans('cruds.purchase_order_entry.fields.remaining_budget') }}</label>
-                                <input class="form-control remaining_budget" type="text" name="remaining_budget[]" id="remaining_budget" disabled>
-                            </div>
-                        </div>
+{{--                        <div class="col-1">--}}
+{{--                            <div class="form-group">--}}
+{{--                                <label for="remaining_budget">{{ trans('cruds.purchase_order_entry.fields.remaining_budget') }}</label>--}}
+{{--                                <input class="form-control remaining_budget" type="text" name="remaining_budget[]" id="remaining_budget" disabled>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
 
                         <div class="col-1">
                             <button type="button" class="btn btn-success add-row" style="margin: 5px">+</button>
@@ -574,6 +574,41 @@
             </div>
         </div>
 
+        <div class="card">
+            <div class="card-header">
+                {{ trans('cruds.purchase_order_entry.fields.budget_information') }}
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="budget">{{ trans('cruds.purchase_order_entry.fields.budget') }}</label>
+                            <input class="form-control budget {{ $errors->has('budget') ? 'is-invalid' : '' }}" type="text" name="budget" id="budget" value="{{ old('budget', '') }}" readonly>
+                            @if($errors->has('budget'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('budget') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.purchase_order_entry.fields.budget_helper') }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="budget_remaining">{{ trans('cruds.purchase_order_entry.fields.budget_remaining') }}</label>
+                            <input class="form-control budget_remaining {{ $errors->has('budget_remaining') ? 'is-invalid' : '' }}" type="text" name="budget_remaining" id="budget_remaining" value="{{ old('budget_remaining', '') }}" readonly>
+                            @if($errors->has('budget_remaining'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('budget_remaining') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.purchase_order_entry.fields.budget_remaining_helper') }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="card">
             <div class="card-header">
@@ -645,6 +680,7 @@
 
 <script>
     $(document).ready(function() {
+        var budgetAmount = 0;
         function updateRemoveButtons() {
             $('.remove-row').prop('disabled', $('.product-row').length === 1);
         }
@@ -656,7 +692,7 @@
             row.find('input[name="total_price[]"]').val(total_price.toFixed(2));
         }
 
-        function calculateAndSetTotalAmount() {
+        function calculateAndSetTotalAmount(budget_remaining = null) {
             var overallTotalPrice = 0;
             $('.product-row').each(function() {
                 var row = $(this);
@@ -672,8 +708,17 @@
 
             $('#total_amount').val(overallTotalPrice.toFixed(2));
             $('#in_words').val(numberToWords.toWords(finalTotalAmount.toFixed(2)).toUpperCase());
-
             $('#net_payable_amount').val(finalTotalAmount.toFixed(2));
+
+
+            var budgetRemaining = budgetAmount;
+            var netPayableAmount = finalTotalAmount;
+
+            console.log('Budget Remaining:', budgetRemaining);
+            console.log('Net Payable Amount:', netPayableAmount);
+
+            var updatedBudgetRemaining = budgetRemaining - netPayableAmount;
+            $('#budget_remaining').val(updatedBudgetRemaining.toFixed(2));
         }
 
         function gatherProductDetails() {
@@ -689,8 +734,6 @@
                     uom: row.find('input[name="uom[]"]').val(),
                     unit_price: row.find('input[name="unit_price[]"]').val(),
                     total_price: row.find('input[name="total_price[]"]').val(),
-                    budget_amount: row.find('input[name="budget_amount[]"]').val(),
-                    remaining_budget: row.find('input[name="remaining_budget[]"]').val()
                 };
                 productDetails.push(product);
             });
@@ -709,7 +752,7 @@
             if ($('.product-row').length > 1) {
                 $(this).closest('.product-row').remove();
                 updateRemoveButtons();
-                calculateAndSetTotalAmount();  // Recalculate total amount after a row is removed
+                calculateAndSetTotalAmount();
             }
         });
 
@@ -728,35 +771,57 @@
         });
 
         updateRemoveButtons();
-        calculateAndSetTotalAmount();  // Initial calculation and setting of total amount
+        calculateAndSetTotalAmount();
+
+        $('.department_id').change(function() {
+            var departmentId = $(this).val();
+            if (departmentId) {
+                // Fetch purchase order first
+                $.ajax({
+                    url: '{{ route("admin.get-purchase-order") }}',
+                    type: 'GET',
+                    data: { department_id: departmentId },
+                    success: function(response) {
+                        if (response.success) {
+                            $('#purchase_order').val(response.purchase_order);
+                            // Once purchase order is fetched, fetch budget details
+                            $.ajax({
+                                url: '{{ route("admin.get-budget-details") }}',
+                                type: 'GET',
+                                data: { department_id: departmentId },
+                                success: function(response) {
+                                    if (response.success) {
+                                        budgetAmount = response.budget_data.budget_remaining;
+                                        $('.budget').val(response.budget_data.budget_amount);
+                                        $('.budget_remaining').val(response.budget_data.budget_remaining);
+
+                                    } else {
+                                        // Handle error
+                                    }
+                                },
+                                error: function() {
+                                    // Handle error
+                                }
+                            });
+                        } else {
+                            // Handle error
+                        }
+                    },
+                    error: function() {
+                        // Handle error
+                    }
+                });
+            } else {
+                // Handle case when departmentId is empty
+            }
+        });
     });
 </script>
 
 
 <script>
     $(document).ready(function() {
-        $('#department_id').change(function() {
-            var departmentId = $(this).val();
-            if(departmentId) {
-                $.ajax({
-                    url: '{{ route("admin.get-purchase-order") }}', // Update with your route
-                    type: 'GET',
-                    data: { department_id: departmentId },
-                    success: function(response) {
-                        if(response.success) {
-                            $('#purchase_order').val(response.purchase_order);
-                        } else {
-                            $('#purchase_order').val('');
-                        }
-                    },
-                    error: function() {
 
-                    }
-                });
-            } else {
-
-            }
-        });
     });
 </script>
 

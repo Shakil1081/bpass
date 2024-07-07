@@ -885,6 +885,16 @@ return [
             'remaining_budget'              => 'Remaining Budget',
             'remaining_budget_helper'       => ' ',
 
+
+            'budget_information'              => 'Budget Information',
+            'budget_information_helper'       => ' ',
+
+            'budget'              => 'Budget Amount',
+            'budget_helper'       => ' ',
+            'budget_remaining'              => 'Remaining Budget',
+            'budget_remaining_helper'       => ' ',
+
+
             'payable_information'              => 'Payable Information',
             'payable_information_helper'       => ' ',
             'total_amount'              => 'Total Amount',
