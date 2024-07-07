@@ -278,15 +278,6 @@ class PurchaseOrderController extends Controller
         }
     }
 
-    public function calcBudgetRemaining(Request $request){
-        $remainingBudget = $request->input('budgetRemaining') - $request->input('netPayableAmount');
-
-        return response()->json([
-            'success' => true,
-            'remainingBudget' => $remainingBudget
-        ]);
-    }
-
     public function purchaseOrderEntryStore(PurchaseOrderEntryRequest $request)
     {
         $request->session()->put('product_details', json_decode($request->product_details));
@@ -348,6 +339,12 @@ class PurchaseOrderController extends Controller
                 'uom' => $productDetail->uom,
             ]);
         }
+
+        Budget::where('department_id', $request->input('department_id'))
+            ->where('valid_up_to','>=',Carbon::now()->format('Y-m-d'))->update([
+                'budget_remaining' => $request->input('budget_remaining'),
+            ]);;
+
 
         return redirect()->route('admin.purchase-orders.index');
     }

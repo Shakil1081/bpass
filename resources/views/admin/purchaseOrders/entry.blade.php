@@ -718,7 +718,13 @@
             console.log('Net Payable Amount:', netPayableAmount);
 
             var updatedBudgetRemaining = budgetRemaining - netPayableAmount;
-            $('#budget_remaining').val(updatedBudgetRemaining.toFixed(2));
+            if(netPayableAmount > 0){
+                if(updatedBudgetRemaining > netPayableAmount){
+                    $('#budget_remaining').val(updatedBudgetRemaining.toFixed(2));
+                }else {
+                    alert('Expense Exceeds the Budget')
+                }
+            }
         }
 
         function gatherProductDetails() {

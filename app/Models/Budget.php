@@ -27,6 +27,7 @@ class Budget extends Model
         'created_by_id',
         'updated_by_id',
         'budget_amount',
+        'budget_remaining',
         'budget_date',
         'budget_for',
         'budget_name',
