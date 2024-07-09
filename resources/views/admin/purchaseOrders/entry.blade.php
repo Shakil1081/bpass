@@ -675,191 +675,190 @@
         </div>
     </form>
 @endsection
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/number-to-words"></script>
+@section('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/number-to-words"></script>
 
-<script>
-    $(document).ready(function() {
-        var budgetAmount = 0;
-        function updateRemoveButtons() {
-            $('.remove-row').prop('disabled', $('.product-row').length === 1);
-        }
+    <script>
+        $(document).ready(function() {
+            var budgetAmount = 0;
+            function updateRemoveButtons() {
+                $('.remove-row').prop('disabled', $('.product-row').length === 1);
+            }
 
-        function calculateTotalPrice(row) {
-            var quantity = parseFloat(row.find('input[name="quantity[]"]').val()) || 0;
-            var unit_price = parseFloat(row.find('input[name="unit_price[]"]').val()) || 0;
-            var total_price = quantity * unit_price;
-            row.find('input[name="total_price[]"]').val(total_price.toFixed(2));
-        }
+            function calculateTotalPrice(row) {
+                var quantity = parseFloat(row.find('input[name="quantity[]"]').val()) || 0;
+                var unit_price = parseFloat(row.find('input[name="unit_price[]"]').val()) || 0;
+                var total_price = quantity * unit_price;
+                row.find('input[name="total_price[]"]').val(total_price.toFixed(2));
+            }
 
-        function calculateAndSetTotalAmount(budget_remaining = null) {
-            var overallTotalPrice = 0;
-            $('.product-row').each(function() {
-                var row = $(this);
-                calculateTotalPrice(row);
-                var total_price = parseFloat(row.find('input[name="total_price[]"]').val()) || 0;
-                overallTotalPrice += total_price;
-            });
+            function calculateAndSetTotalAmount(budget_remaining = null) {
+                var overallTotalPrice = 0;
+                $('.product-row').each(function() {
+                    var row = $(this);
+                    calculateTotalPrice(row);
+                    var total_price = parseFloat(row.find('input[name="total_price[]"]').val()) || 0;
+                    overallTotalPrice += total_price;
+                });
 
-            var discountAmount = parseFloat($('#discount_amount').val()) || 0;
-            var cluAmount = parseFloat($('#carrying_loading_uploading_amount').val()) || 0;
+                var discountAmount = parseFloat($('#discount_amount').val()) || 0;
+                var cluAmount = parseFloat($('#carrying_loading_uploading_amount').val()) || 0;
 
-            var finalTotalAmount = overallTotalPrice + cluAmount - discountAmount;
+                var finalTotalAmount = overallTotalPrice + cluAmount - discountAmount;
 
-            $('#total_amount').val(overallTotalPrice.toFixed(2));
-            $('#in_words').val(numberToWords.toWords(finalTotalAmount.toFixed(2)).toUpperCase());
-            $('#net_payable_amount').val(finalTotalAmount.toFixed(2));
+                $('#total_amount').val(overallTotalPrice.toFixed(2));
+                $('#in_words').val(numberToWords.toWords(finalTotalAmount.toFixed(2)).toUpperCase());
+                $('#net_payable_amount').val(finalTotalAmount.toFixed(2));
 
 
-            var budgetRemaining = budgetAmount;
-            var netPayableAmount = finalTotalAmount;
+                var budgetRemaining = budgetAmount;
+                var netPayableAmount = finalTotalAmount;
 
-            console.log('Budget Remaining:', budgetRemaining);
-            console.log('Net Payable Amount:', netPayableAmount);
+                console.log('Budget Remaining:', budgetRemaining);
+                console.log('Net Payable Amount:', netPayableAmount);
 
-            var updatedBudgetRemaining = budgetRemaining - netPayableAmount;
-            if(netPayableAmount > 0){
-                if(updatedBudgetRemaining > netPayableAmount){
-                    $('#budget_remaining').val(updatedBudgetRemaining.toFixed(2));
-                }else {
-                    alert('Expense Exceeds the Budget')
+                var updatedBudgetRemaining = budgetRemaining - netPayableAmount;
+                if(netPayableAmount > 0){
+                    if(updatedBudgetRemaining > netPayableAmount){
+                        $('#budget_remaining').val(updatedBudgetRemaining.toFixed(2));
+                    }else {
+                        alert('Expense Exceeds the Budget')
+                    }
                 }
             }
-        }
 
-        function gatherProductDetails() {
-            var productDetails = [];
-            $('.product-row').each(function() {
-                var row = $(this);
-                var product = {
-                    item_name: row.find('input[name="item_name[]"]').val(),
-                    size_capacity: row.find('input[name="size_capacity[]"]').val(),
-                    brand: row.find('input[name="brand[]"]').val(),
-                    origin: row.find('input[name="origin[]"]').val(),
-                    quantity: row.find('input[name="quantity[]"]').val(),
-                    uom: row.find('input[name="uom[]"]').val(),
-                    unit_price: row.find('input[name="unit_price[]"]').val(),
-                    total_price: row.find('input[name="total_price[]"]').val(),
-                };
-                productDetails.push(product);
-            });
-            $('#product_details').val(JSON.stringify(productDetails));
-        }
-
-        $(document).on('click', '.add-row', function() {
-            var newRow = $(this).closest('.product-row').clone();
-            newRow.find('input').val('');
-            newRow.find('input[name="total_price[]"]').prop('disabled', true);
-            newRow.appendTo('#product-rows');
-            updateRemoveButtons();
-        });
-
-        $(document).on('click', '.remove-row', function() {
-            if ($('.product-row').length > 1) {
-                $(this).closest('.product-row').remove();
-                updateRemoveButtons();
-                calculateAndSetTotalAmount();
+            function gatherProductDetails() {
+                var productDetails = [];
+                $('.product-row').each(function() {
+                    var row = $(this);
+                    var product = {
+                        item_name: row.find('input[name="item_name[]"]').val(),
+                        size_capacity: row.find('input[name="size_capacity[]"]').val(),
+                        brand: row.find('input[name="brand[]"]').val(),
+                        origin: row.find('input[name="origin[]"]').val(),
+                        quantity: row.find('input[name="quantity[]"]').val(),
+                        uom: row.find('input[name="uom[]"]').val(),
+                        unit_price: row.find('input[name="unit_price[]"]').val(),
+                        total_price: row.find('input[name="total_price[]"]').val(),
+                    };
+                    productDetails.push(product);
+                });
+                $('#product_details').val(JSON.stringify(productDetails));
             }
-        });
 
-        $(document).on('input', 'input[name="quantity[]"], input[name="unit_price[]"]', function() {
-            var row = $(this).closest('.product-row');
-            calculateTotalPrice(row);
-            calculateAndSetTotalAmount();  // Set total amount whenever an input changes
-        });
+            $(document).on('click', '.add-row', function() {
+                var newRow = $(this).closest('.product-row').clone();
+                newRow.find('input').val('');
+                newRow.find('input[name="total_price[]"]').prop('disabled', true);
+                newRow.appendTo('#product-rows');
+                updateRemoveButtons();
+            });
 
-        $(document).on('input', '#discount_amount, #carrying_loading_uploading_amount', function() {
+            $(document).on('click', '.remove-row', function() {
+                if ($('.product-row').length > 1) {
+                    $(this).closest('.product-row').remove();
+                    updateRemoveButtons();
+                    calculateAndSetTotalAmount();
+                }
+            });
+
+            $(document).on('input', 'input[name="quantity[]"], input[name="unit_price[]"]', function() {
+                var row = $(this).closest('.product-row');
+                calculateTotalPrice(row);
+                calculateAndSetTotalAmount();  // Set total amount whenever an input changes
+            });
+
+            $(document).on('input', '#discount_amount, #carrying_loading_uploading_amount', function() {
+                calculateAndSetTotalAmount();
+            });
+
+            $('form').on('submit', function() {
+                gatherProductDetails();
+            });
+
+            updateRemoveButtons();
             calculateAndSetTotalAmount();
-        });
 
-        $('form').on('submit', function() {
-            gatherProductDetails();
-        });
+            $('.department_id').change(function() {
+                var departmentId = $(this).val();
+                if (departmentId) {
+                    // Fetch purchase order first
+                    $.ajax({
+                        url: '{{ route("admin.get-purchase-order") }}',
+                        type: 'GET',
+                        data: { department_id: departmentId },
+                        success: function(response) {
+                            if (response.success) {
+                                $('#purchase_order').val(response.purchase_order);
+                                // Once purchase order is fetched, fetch budget details
+                                $.ajax({
+                                    url: '{{ route("admin.get-budget-details") }}',
+                                    type: 'GET',
+                                    data: { department_id: departmentId },
+                                    success: function(response) {
+                                        if (response.success) {
+                                            budgetAmount = response.budget_data.budget_remaining;
+                                            $('.budget').val(response.budget_data.budget_amount);
+                                            $('.budget_remaining').val(response.budget_data.budget_remaining);
 
-        updateRemoveButtons();
-        calculateAndSetTotalAmount();
-
-        $('.department_id').change(function() {
-            var departmentId = $(this).val();
-            if (departmentId) {
-                // Fetch purchase order first
-                $.ajax({
-                    url: '{{ route("admin.get-purchase-order") }}',
-                    type: 'GET',
-                    data: { department_id: departmentId },
-                    success: function(response) {
-                        if (response.success) {
-                            $('#purchase_order').val(response.purchase_order);
-                            // Once purchase order is fetched, fetch budget details
-                            $.ajax({
-                                url: '{{ route("admin.get-budget-details") }}',
-                                type: 'GET',
-                                data: { department_id: departmentId },
-                                success: function(response) {
-                                    if (response.success) {
-                                        budgetAmount = response.budget_data.budget_remaining;
-                                        $('.budget').val(response.budget_data.budget_amount);
-                                        $('.budget_remaining').val(response.budget_data.budget_remaining);
-
-                                    } else {
+                                        } else {
+                                            // Handle error
+                                        }
+                                    },
+                                    error: function() {
                                         // Handle error
                                     }
-                                },
-                                error: function() {
-                                    // Handle error
-                                }
-                            });
-                        } else {
+                                });
+                            } else {
+                                // Handle error
+                            }
+                        },
+                        error: function() {
                             // Handle error
                         }
-                    },
-                    error: function() {
-                        // Handle error
-                    }
-                });
-            } else {
-                // Handle case when departmentId is empty
-            }
+                    });
+                } else {
+                    // Handle case when departmentId is empty
+                }
+            });
         });
-    });
-</script>
+    </script>
 
 
-<script>
-    $(document).ready(function() {
+    <script>
+        $(document).ready(function() {
 
-    });
-</script>
+        });
+    </script>
 
-<script>
-    $(document).ready(function() {
-        function updateRemoveButtons() {
-            if ($('.terms-row').length > 1) {
-                $('.removeTermsButton').prop('disabled', false);
-            } else {
-                $('.removeTermsButton').prop('disabled', true);
+    <script>
+        $(document).ready(function() {
+            function updateRemoveButtons() {
+                if ($('.terms-row').length > 1) {
+                    $('.removeTermsButton').prop('disabled', false);
+                } else {
+                    $('.removeTermsButton').prop('disabled', true);
+                }
             }
-        }
 
-        $('#addTermsButton').click(function() {
-            var newRow = $('.terms-row:first').clone();
-            newRow.find('input').val('');
-            $('#termsContainer').append(newRow);
+            $('#addTermsButton').click(function() {
+                var newRow = $('.terms-row:first').clone();
+                newRow.find('input').val('');
+                $('#termsContainer').append(newRow);
+                updateRemoveButtons();
+            });
+
+            $(document).on('click', '.removeTermsButton', function() {
+                if ($('.terms-row').length > 1) {
+                    $(this).closest('.terms-row').remove();
+                    updateRemoveButtons();
+                }
+            });
+
             updateRemoveButtons();
         });
-
-        $(document).on('click', '.removeTermsButton', function() {
-            if ($('.terms-row').length > 1) {
-                $(this).closest('.terms-row').remove();
-                updateRemoveButtons();
-            }
-        });
-
-        updateRemoveButtons();
-    });
-</script>
-
-@section('scripts')
+    </script>
 @endsection
 
 

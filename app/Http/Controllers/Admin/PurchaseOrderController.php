@@ -243,8 +243,14 @@ class PurchaseOrderController extends Controller
 
     public function getPurchaseOrder(Request $request)
     {
-        $departmentId = $request->input('department_id');
-        $purchaseOrder = 'AFL-'.Carbon::today()->format('Ymd').'-'.rand(100,999).$departmentId;
+        $PurOrders = PurchaseOrder::whereMonth('created_at', Carbon::now()->month)
+            ->whereYear('created_at', Carbon::now()->year)
+            ->get();
+
+        $orderCount = $PurOrders->count() + 1;
+        $orderCountPadded = str_pad($orderCount, 5, '0', STR_PAD_LEFT);
+
+        $purchaseOrder = 'BRL-' . Carbon::today()->format('Y') . '-' . Carbon::today()->format('m') . '-' . $orderCountPadded;
 
         if ($purchaseOrder) {
             return response()->json([
