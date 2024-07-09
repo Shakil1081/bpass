@@ -12,6 +12,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
+use NumberToWords\NumberToWords;
 use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
@@ -176,5 +178,92 @@ class ProductController extends Controller
     {
         $product->delete();
         return redirect()->back();
+    }
+
+    public function editOrderProducts()
+    {
+        return view('admin.products.edit_order_products');
+    }
+
+    public function fetchOrderIds(Request $request)
+    {
+        $orderId = $request->get('orderId', '');
+        $orderType = $request->get('orderType', '');
+
+        if ($orderType == 'purchase_order'){
+            $orderIds = PurchaseOrder::where('purchase_order_no', 'LIKE', '%' . $orderId . '%')
+                ->get(['id', 'purchase_order_no']);
+        }else{
+            $orderIds = NonPurchaseOrder::where('non_purchase_order_no', 'LIKE', '%' . $orderId . '%')
+                ->get(['id', 'non_purchase_order_no']);
+        }
+        $results = [];
+        foreach ($orderIds as $order) {
+            $results[] = [
+                'value' => $order->id,
+                'label' => $order->purchase_order_no ?? $order->non_purchase_order_no,
+            ];
+        }
+
+        return response()->json($results);
+    }
+
+    public function fetchProductsByOrderId($orderId)
+    {
+        $products = Product::where('purchase_order_id', $orderId)->get();
+        return response()->json($products);
+    }
+
+    public function updateOrderProducts(Request $request)
+    {
+        $orderId = $request->order_id;
+        $products = $request->input('products', []);
+
+        $rules = [
+            '*.quantity' => 'required|integer|min:1',
+            '*.unit_price' => 'required|numeric|min:0',
+        ];
+
+        $validator = Validator::make($products, $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $finalTotalPrice = 0;
+
+        foreach ($products as $productId => $productData) {
+            $product = Product::find($productId);
+            if ($product) {
+                $product->update($productData);
+
+                $productTotalPrice = $productData['quantity'] * $productData['unit_price'];
+                $finalTotalPrice += $productTotalPrice;
+            }
+        }
+
+        $orderDetails = PurchaseOrder::findOrFail($orderId);
+
+        $totalAmountOrder = $finalTotalPrice + $orderDetails->carr_load_up_amount - $orderDetails->discount_amount;
+
+        $numberToWords = new NumberToWords();
+        $numberTransformer = $numberToWords->getNumberTransformer('en');
+        $finalTotalAmountInWords = $numberTransformer->toWords($totalAmountOrder);
+
+
+        $orderDetails->update([
+            'actual_payable_amount' => $totalAmountOrder,
+            'amount_in_words' => $finalTotalAmountInWords,
+            'total_amount' => $finalTotalPrice,
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Products updated successfully.',
+            'redirect_url' => route('admin.products.index')
+        ]);
     }
 }

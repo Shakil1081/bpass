@@ -51,7 +51,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('cheques', 'ChequeController');
     Route::resource('cheques-details', 'ChequeDetailsController');
 
-    //Requisitions
+    //Product
+    Route::get('products/edit-order-products', 'ProductController@editOrderProducts')->name('product.editOrderProducts');
+    Route::get('/fetch-order-ids', 'ProductController@fetchOrderIds')->name('fetch.order.ids');
+    Route::get('/fetch-products/{orderId}', 'ProductController@fetchProductsByOrderId')->name('fetch.products');
+    Route::post('/order-products/update', 'ProductController@updateOrderProducts')->name('order-products.update');
     Route::resource('products', 'ProductController');
 
     //Documents
