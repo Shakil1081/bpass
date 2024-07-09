@@ -675,10 +675,9 @@
         </div>
     </form>
 @endsection
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/number-to-words"></script>
 @section('scripts')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/number-to-words"></script>
-
     <script>
         $(document).ready(function() {
             var budgetAmount = 0;

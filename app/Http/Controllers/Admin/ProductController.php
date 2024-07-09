@@ -256,7 +256,7 @@ class ProductController extends Controller
 
         $orderDetails->update([
             'actual_payable_amount' => $totalAmountOrder,
-            'amount_in_words' => $finalTotalAmountInWords,
+            'amount_in_words' => strtoupper($finalTotalAmountInWords),
             'total_amount' => $finalTotalPrice,
         ]);
 
