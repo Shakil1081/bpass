@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Product extends Model
 {
@@ -61,4 +62,21 @@ class Product extends Model
 //    {
 //
 //    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::creating(function($model) {
+            if (Auth::user()){
+                $model->created_by = Auth::user()->id;
+            }
+        });
+
+        self::updating(function($model) {
+            if (Auth::user()){
+                $model->updated_by = Auth::user()->id;
+            }
+        });
+
+    }
 }

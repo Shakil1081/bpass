@@ -8,6 +8,7 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class NonPurchaseOrder extends Model
 {
@@ -86,5 +87,23 @@ class NonPurchaseOrder extends Model
     public function organization()
     {
         return $this->belongsTo(Organization::class, 'organization_id');
+    }
+
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::creating(function($model) {
+            if (Auth::user()){
+                $model->created_by_id = Auth::user()->id;
+            }
+        });
+
+        self::updating(function($model) {
+            if (Auth::user()){
+                $model->updated_by_id = Auth::user()->id;
+            }
+        });
+
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Requests\BudgetDetailsRequest;
 use App\Models\Budget;
 use App\Models\BudgetDetails;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
@@ -152,5 +153,25 @@ class BudgetDetailsController extends Controller
     {
         BudgetDetails::where('id', $id)->delete();
         return redirect()->back();
+    }
+
+    public function getBudgetDetails(Request $request)
+    {
+        $departmentId = $request->input('department_id');
+
+        $budgetData = Budget::where('department_id', $departmentId)
+            ->where('valid_up_to','>=',Carbon::now()->format('Y-m-d'))
+            ->select('budget_amount','budget_remaining')->first();
+
+        if ($budgetData) {
+            return response()->json([
+                'success' => true,
+                'budget_data' => $budgetData
+            ]);
+        } else {
+            return response()->json([
+                'success' => false
+            ]);
+        }
     }
 }

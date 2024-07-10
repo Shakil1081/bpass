@@ -917,4 +917,130 @@ return [
             'updated_at_helper'       => ' ',
         ],
     ],
+
+
+
+    'non_purchase_order_entry' => [
+        'title'          => 'Non Purchase Order Entry',
+        'title_singular' => 'Non Purchase Order Entry',
+        'dropdowns' => [
+            'payment_type' => ['A/C Pay Cheque','Cash Cheque','Cash','Credit','Pay Order']
+        ],
+        'fields'         => [
+            'id'                        => 'ID',
+            'id_helper'                 => ' ',
+            'department_id'             => 'Requisition Form',
+            'department_id_helper'      => ' ',
+            'reference_no'              => 'Reference No',
+            'reference_no_helper'       => ' ',
+            'reference_date'            => 'Reference Date',
+            'reference_date_helper'     => ' ',
+
+            'order_information'         => 'Order Information',
+            'order_information_helper'           => ' ',
+
+            'non_purchase_order_no'      => 'Non Purchase Order No',
+            'non_purchase_order_no_helper'     => ' ',
+            'entry_date'       => 'Entry Date',
+            'entry_date_helper'=> ' ',
+
+//            'mpr_no'                    => 'MPR No',
+//            'mpr_no_helper'             => ' ',
+//            'mpr_received_date'         => 'MPR Received Date',
+//            'mpr_received_date_helper'  => ' ',
+//            'place_of_loading'          => 'Place Of Loading',
+//            'place_of_loading_helper'   => ' ',
+//            'mode_of_transport'         => 'Mode Of Transport',
+//            'mode_of_transport_helper'  => ' ',
+
+            'supplier_information'         => 'Supplier Information',
+            'supplier_information_helper'           => ' ',
+
+            'supplier_name'             => 'Supplier Name',
+            'supplier_name_helper'      => ' ',
+            'supplier_cell_no'              => 'Cell Number',
+            'supplier_cell_no_helper'       => ' ',
+            'supplier_email'              => 'Email',
+            'supplier_email_helper'       => ' ',
+            'supplier_address'              => 'Supplier Address',
+            'supplier_address_helper'       => ' ',
+
+//            'delivery_information'              => 'Delivery Information',
+//            'delivery_information_helper'       => ' ',
+//
+//            'delivery_place'              => 'Delivery Place',
+//            'delivery_place_helper'       => ' ',
+//            'delivery_period'              => 'Delivery Period(In Days)',
+//            'delivery_period_helper'       => ' ',
+//            'delivery_term'              => 'Delivery Term',
+//            'delivery_term_helper'       => ' ',
+
+            'payment_information'              => 'Payment Information',
+            'payment_information_helper'       => ' ',
+
+            'payment_type'              => 'Payment Type',
+            'payment_type_helper'       => ' ',
+            'credit_period'              => 'Credit Period(In Days)',
+            'credit_period_helper'       => ' ',
+            'payment_term'              => 'Payment Term',
+            'payment_term_helper'       => ' ',
+
+            'product_details'              => 'Product Details',
+            'product_details_helper'       => ' ',
+
+            'item_name'              => 'Item Name',
+            'item_name_helper'       => ' ',
+            'size_capacity'              => 'Size/Capacity',
+            'size_capacity_helper'       => ' ',
+            'brand'              => 'Brand',
+            'brand_helper'       => ' ',
+            'origin'              => 'Origin',
+            'origin_helper'       => ' ',
+            'quantity'              => 'Quantity',
+            'quantity_helper'       => ' ',
+            'uom'              => 'UOM',
+            'uom_helper'       => ' ',
+            'unit_price'              => 'Unit Price',
+            'unit_price_helper'       => ' ',
+            'total_price'              => 'Total Price',
+            'total_price_helper'       => ' ',
+
+
+//            'budget_amount'              => 'Budget Amount',
+//            'budget_amount_helper'       => ' ',
+//            'remaining_budget'              => 'Remaining Budget',
+//            'remaining_budget_helper'       => ' ',
+
+
+//            'budget_information'              => 'Budget Information',
+//            'budget_information_helper'       => ' ',
+//
+//            'budget'              => 'Budget Amount',
+//            'budget_helper'       => ' ',
+//            'budget_remaining'              => 'Remaining Budget',
+//            'budget_remaining_helper'       => ' ',
+
+
+            'payable_information'              => 'Payable Information',
+            'payable_information_helper'       => ' ',
+            'total_amount'              => 'Total Amount',
+            'total_amount_helper'       => ' ',
+            'discount_amount'              => 'Discount Amount',
+            'discount_amount_helper'       => ' ',
+            'carrying_loading_uploading_amount'     => 'Carrying/Loading/Uploading Amount',
+            'carrying_loading_uploading_amount_helper'       => ' ',
+            'net_payable_amount'              => 'Net Payable Amount',
+            'net_payable_amount_helper'       => ' ',
+            'in_words'              => 'In Words(BDT)',
+            'in_words_helper'       => ' ',
+
+            'terms_and_conditions'              => 'Terms & Conditions',
+            'terms_and_conditions_helper'       => ' ',
+
+            'created_at'              => 'Created At',
+            'created_at_helper'       => ' ',
+            'updated_at'              => 'Updated At',
+            'updated_at_helper'       => ' ',
+        ],
+    ],
 ];

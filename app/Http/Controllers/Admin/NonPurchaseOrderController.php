@@ -5,13 +5,22 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyNonPurchaseOrderRequest;
+use App\Http\Requests\NonPurchaseOrderEntryRequest;
+use App\Http\Requests\PurchaseOrderEntryRequest;
 use App\Http\Requests\StoreNonPurchaseOrderRequest;
 use App\Http\Requests\UpdateNonPurchaseOrderRequest;
+use App\Models\Budget;
+use App\Models\Department;
 use App\Models\NonPurchaseOrder;
 use App\Models\Organization;
+use App\Models\Product;
+use App\Models\PurchaseOrder;
+use App\Models\Requisition;
 use App\Models\User;
+use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -181,5 +190,90 @@ class NonPurchaseOrderController extends Controller
         }
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+
+    public function nonPurchaseOrderEntry(Request $request)
+    {
+        //$request->session()->forget('product_details');
+        $department = Department::pluck('department_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.nonPurchaseOrders.entry', compact( 'department'));
+    }
+
+    public function getNonPurchaseOrder(Request $request)
+    {
+        $nonPurOrders = NonPurchaseOrder::whereMonth('created_at', Carbon::now()->month)
+            ->whereYear('created_at', Carbon::now()->year)
+            ->get();
+
+        $orderCount = $nonPurOrders->count() + 1;
+
+        $orderCountPadded = str_pad($orderCount, 5, '0', STR_PAD_LEFT);
+
+        $nonPurchaseOrder = 'BRL-' . Carbon::today()->format('Y') . '-' . Carbon::today()->format('m') . '-' . $orderCountPadded;
+
+        if ($nonPurchaseOrder) {
+            return response()->json([
+                'success' => true,
+                'non_purchase_order' => $nonPurchaseOrder
+            ]);
+        } else {
+            return response()->json([
+                'success' => false
+            ]);
+        }
+    }
+
+
+    public function nonPurchaseOrderEntryStore(NonPurchaseOrderEntryRequest $request)
+    {
+        $request->session()->put('product_details', json_decode($request->product_details));
+
+        $nonPurchaseOrder = NonPurchaseOrder::create([
+            'actual_payable_amount' => $request->input('net_payable_amount'),
+
+            'advance_amount' => $request->input('advance_amount'),
+
+            'cell_no' => $request->input('supplier_cell_no'),
+            'amount_in_words' => $request->input('in_words'),
+
+            'credit_limit' => $request->input('credit_period'),
+
+            'discount_amount' => $request->input('discount_amount'),
+            'email' => $request->input('supplier_email'),
+            'entry_date' => $request->input('entry_date'),
+            'payment_term' => $request->input('payment_term'),
+
+            'payment_type' => $request->input('payment_type'),
+
+            'non_purchase_order_no' => $request->input('non_purchase_order_no'),
+            'reference_date' => $request->input('reference_date'),
+            'reference_no' => $request->input('reference_no'),
+            'supplier_address' => $request->input('supplier_address'),
+            'supplier' => $request->input('supplier'),
+            'supplier_name' => $request->input('supplier_name'),
+            'total_amount' => $request->input('total_amount'),
+            'vat_amount' => $request->input('vat_amount'),
+        ]);
+
+        $productDetails = json_decode($request->product_details);
+
+        foreach ($productDetails as $productDetail) {
+            Product::create([
+                'non_purchase_order_id' => $nonPurchaseOrder->id,
+                'brand' => $productDetail->brand,
+                'item_name' => $productDetail->item_name,
+                'origin' => $productDetail->origin,
+                'quantity' => $productDetail->quantity,
+                'serial_no' => '',
+                'size_or_capacity' => $productDetail->size_capacity,
+                'unit_price' => $productDetail->unit_price,
+                'uom' => $productDetail->uom,
+            ]);
+        }
+
+        $request->session()->forget('product_details');
+        return redirect()->route('admin.non-purchase-orders.index');
     }
 }

@@ -96,6 +96,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('non-purchase-orders/destroy', 'NonPurchaseOrderController@massDestroy')->name('non-purchase-orders.massDestroy');
     Route::post('non-purchase-orders/parse-csv-import', 'NonPurchaseOrderController@parseCsvImport')->name('non-purchase-orders.parseCsvImport');
     Route::post('non-purchase-orders/process-csv-import', 'NonPurchaseOrderController@processCsvImport')->name('non-purchase-orders.processCsvImport');
+
+    //new added
+    Route::get('non-purchase-orders/entry', 'NonPurchaseOrderController@nonPurchaseOrderEntry')->name('non-purchase-orders.entry');
+    Route::get('non-purchase-orders/get-purchase-order', 'NonPurchaseOrderController@getNonPurchaseOrder')->name('get-non-purchase-order');
+    Route::post('non-purchase-orders/entry/store', 'NonPurchaseOrderController@nonPurchaseOrderEntryStore')->name('non-purchase-orders.entryStore');
+
     Route::resource('non-purchase-orders', 'NonPurchaseOrderController');
 
     // Purchase Order
@@ -106,7 +112,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //new added
     Route::get('purchase-orders/entry', 'PurchaseOrderController@purchaseOrderEntry')->name('purchase-orders.entry');
     Route::get('purchase-orders/get-purchase-order', 'PurchaseOrderController@getPurchaseOrder')->name('get-purchase-order');
-    Route::get('purchase-orders/get-budget-details', 'PurchaseOrderController@getBudgetDetails')->name('get-budget-details');
+
     Route::post('purchase-orders/entry/store', 'PurchaseOrderController@purchaseOrderEntryStore')->name('purchase-orders.entryStore');
 
     Route::resource('purchase-orders', 'PurchaseOrderController');
@@ -129,6 +135,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('budgets/process-csv-import', 'BudgetController@processCsvImport')->name('budgets.processCsvImport');
     Route::resource('budgets', 'BudgetController');
     //budget_details
+
+    Route::get('budget-details/get-budget-details', 'BudgetDetailsController@getBudgetDetails')->name('get-budget-details');
     Route::resource('budget-details', 'BudgetDetailsController');
 
     // Expense Type

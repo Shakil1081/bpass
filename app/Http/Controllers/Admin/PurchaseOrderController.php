@@ -264,26 +264,6 @@ class PurchaseOrderController extends Controller
         }
     }
 
-    public function getBudgetDetails(Request $request)
-    {
-        $departmentId = $request->input('department_id');
-
-        $budgetData = Budget::where('department_id', $departmentId)
-            ->where('valid_up_to','>=',Carbon::now()->format('Y-m-d'))
-            ->select('budget_amount','budget_remaining')->first();
-
-        if ($budgetData) {
-            return response()->json([
-                'success' => true,
-                'budget_data' => $budgetData
-            ]);
-        } else {
-            return response()->json([
-                'success' => false
-            ]);
-        }
-    }
-
     public function purchaseOrderEntryStore(PurchaseOrderEntryRequest $request)
     {
         $request->session()->put('product_details', json_decode($request->product_details));
@@ -304,7 +284,7 @@ class PurchaseOrderController extends Controller
             'carr_load_up_amount' => $request->input('carrying_loading_uploading_amount'),
             'cell_no' => $request->input('supplier_cell_no'),
 
-            'credit_limit' => $request->input('credit_limit'),
+            'credit_limit' => $request->input('credit_period'),
 
             'delivery_days' => $request->input('delivery_period'),
             'delivery_term' => $request->input('delivery_term'),
@@ -351,7 +331,8 @@ class PurchaseOrderController extends Controller
                 'budget_remaining' => $request->input('budget_remaining'),
             ]);;
 
-
+        $request->session()->forget('product_details');
+        $request->session()->forget('poeTerms');
         return redirect()->route('admin.purchase-orders.index');
     }
 }
