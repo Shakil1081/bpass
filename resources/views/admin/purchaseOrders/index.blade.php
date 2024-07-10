@@ -6,6 +6,9 @@
             <a class="btn btn-success" href="{{ route('admin.purchase-orders.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.purchaseOrder.title_singular') }}
             </a>
+            <a class="btn btn-success" href="{{ route('admin.purchase-orders.entry') }}">
+                {{ trans('global.add') }} {{ trans('cruds.purchase_order_entry.title_singular') }}
+            </a>
             <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
                 {{ trans('global.app_csvImport') }}
             </button>
@@ -228,7 +231,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 });
 
 </script>

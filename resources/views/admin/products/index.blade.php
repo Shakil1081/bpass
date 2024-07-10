@@ -6,6 +6,10 @@
             <a class="btn btn-success" href="{{ route('admin.products.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.products.title_singular') }}
             </a>
+
+            <a class="btn btn-success" href="{{ route('admin.product.editOrderProducts') }}">
+                {{ trans('global.edit') }} {{ trans('cruds.products.title_singular') }} By Order
+            </a>
         </div>
     </div>
 @endcan

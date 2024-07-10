@@ -208,9 +208,15 @@ class ProductController extends Controller
         return response()->json($results);
     }
 
-    public function fetchProductsByOrderId($orderId)
+    public function fetchProductsByOrderId(Request $request, $orderId)
     {
-        $products = Product::where('purchase_order_id', $orderId)->get();
+        $orderType = $request->get('orderType', '');
+
+        if ($orderType == 'purchase_order'){
+            $products = Product::where('purchase_order_id', $orderId)->get();
+        }else{
+            $products = Product::where('non_purchase_order_id', $orderId)->get();
+        }
         return response()->json($products);
     }
 

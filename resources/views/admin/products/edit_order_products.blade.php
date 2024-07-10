@@ -90,6 +90,9 @@
                     $.ajax({
                         url: fetchProductsUrl,
                         dataType: "json",
+                        data: {
+                            orderType: $("#orderType").val()
+                        },
                         type: 'GET',
                         success: function(products) {
                             console.log("Products for order ID " + selectedOrderId + ":", products);
