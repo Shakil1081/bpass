@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Document extends Model
 {
-    use SoftDeletes, HasFactory;
+//    use SoftDeletes, HasFactory;
+    use HasFactory;
 
-    public $table = 'documents';
+//    public $table = 'documents';
+    public $table = 'document';
 
     protected $guarded ;
 

@@ -12,9 +12,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FinanceBank extends Model
 {
-    use SoftDeletes, MultiTenantModelTrait, Auditable, HasFactory;
+//    use SoftDeletes, MultiTenantModelTrait, Auditable, HasFactory;
+    use MultiTenantModelTrait, Auditable, HasFactory;
 
-    public $table = 'finance_banks';
+//    public $table = 'finance_banks';
+    public $table = 'finance_bank';
 
     protected $dates = [
         'updated_by',
@@ -41,9 +43,9 @@ class FinanceBank extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function created_by()
+    public function createdBy()
     {
-        return $this->belongsTo(User::class, 'created_by_id');
+        return $this->belongsTo(User::class, 'created_by','user_name');
     }
 
     public function getUpdatedByAttribute($value)

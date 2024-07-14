@@ -10,9 +10,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TermCondition extends Model
 {
+//    use SoftDeletes, Auditable, HasFactory;
     use SoftDeletes, Auditable, HasFactory;
 
-    public $table = 'term_conditions';
+//    public $table = 'term_conditions';
+    public $table = 'term_condition';
 
     protected $dates = [
         'created_at',

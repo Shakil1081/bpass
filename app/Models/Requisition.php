@@ -11,9 +11,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Requisition extends Model
 {
-    use SoftDeletes, Auditable, HasFactory;
+//    use SoftDeletes, Auditable, HasFactory;
+    use Auditable, HasFactory;
 
-    public $table = 'requisitions';
+//    public $table = 'requisitions';
+    public $table = 'requisition';
 
     protected $dates = [
         'requisition_date',

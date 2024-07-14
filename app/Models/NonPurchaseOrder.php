@@ -12,9 +12,11 @@ use Illuminate\Support\Facades\Auth;
 
 class NonPurchaseOrder extends Model
 {
-    use SoftDeletes, Auditable, HasFactory;
+//    use SoftDeletes, Auditable, HasFactory;
+    use  Auditable, HasFactory;
 
-    public $table = 'non_purchase_orders';
+//    public $table = 'non_purchase_orders';
+    public $table = 'non_purchase_order';
 
     protected $dates = [
         'entry_date',

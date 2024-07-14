@@ -145,8 +145,8 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'created_by_name', name: 'created_by.name' },
-{ data: 'updated_by_name', name: 'updated_by.name' },
+{ data: 'created_by', name: 'created_by' },
+{ data: 'updated_by', name: 'updated_by' },
 { data: 'actual_payable_amount', name: 'actual_payable_amount' },
 { data: 'advance_amount', name: 'advance_amount' },
 { data: 'cell_no', name: 'cell_no' },

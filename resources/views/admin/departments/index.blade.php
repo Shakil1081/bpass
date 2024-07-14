@@ -96,7 +96,7 @@
 { data: 'department_name', name: 'department_name' },
 { data: 'organization_short_name', name: 'organization.short_name' },
 { data: 'organization.short_name', name: 'organization.short_name' },
-{ data: 'created_by_name', name: 'created_by.name' },
+{ data: 'createdBy', name: 'createdBy.full_name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
@@ -108,7 +108,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 });
 
 </script>

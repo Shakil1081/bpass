@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BudgetDetails extends Model
 {
-    use SoftDeletes, HasFactory;
+//    use SoftDeletes, HasFactory;
+    use HasFactory;
 
     public $table = 'budget_details';
 

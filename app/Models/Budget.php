@@ -11,9 +11,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Budget extends Model
 {
-    use SoftDeletes, Auditable, HasFactory;
+    //use SoftDeletes, Auditable, HasFactory;
+    use  Auditable, HasFactory;
 
-    public $table = 'budgets';
+//    public $table = 'budgets';
+    public $table = 'budget';
 
     protected $dates = [
         'budget_date',

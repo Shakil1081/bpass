@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cheque extends Model
 {
-    use SoftDeletes, HasFactory;
+//    use SoftDeletes, HasFactory;
+    use  HasFactory;
 
-    public $table = 'cheques';
+//    public $table = 'cheques';
+    public $table = 'cheque';
 
     protected $fillable = [
         'created_by',

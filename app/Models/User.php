@@ -16,9 +16,11 @@ use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
-    use SoftDeletes, Notifiable, HasFactory;
+    //use SoftDeletes, Notifiable, HasFactory;
+    use  Notifiable, HasFactory;
 
-    public $table = 'users';
+    //public $table = 'users';
+    public $table = 'user';
 
     protected $hidden = [
         'remember_token',

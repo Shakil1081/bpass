@@ -21,7 +21,7 @@ class DepartmentController extends Controller
         abort_if(Gate::denies('department_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Department::with(['organization', 'created_by', 'team'])->select(sprintf('%s.*', (new Department)->table));
+            $query = Department::with(['organization', 'createdBy', 'team'])->select(sprintf('%s.*', (new Department)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -55,13 +55,15 @@ class DepartmentController extends Controller
             $table->editColumn('organization.short_name', function ($row) {
                 return $row->organization ? (is_string($row->organization) ? $row->organization : $row->organization->short_name) : '';
             });
-            $table->addColumn('created_by_name', function ($row) {
-                return $row->created_by ? $row->created_by->name : '';
+            $table->addColumn('createdBy', function ($row) {
+                return $row->createdBy ? $row->createdBy->full_name : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'organization', 'created_by']);
 
             return $table->make(true);
+
+            return $table;
         }
 
         return view('admin.departments.index');

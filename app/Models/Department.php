@@ -11,9 +11,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Department extends Model
 {
-    use SoftDeletes, MultiTenantModelTrait, Auditable, HasFactory;
+//    use SoftDeletes, MultiTenantModelTrait, Auditable, HasFactory;
+    use  MultiTenantModelTrait, Auditable, HasFactory;
 
-    public $table = 'departments';
+//    public $table = 'departments';
+    public $table = 'department';
 
     protected $dates = [
         'created_at',
@@ -41,9 +43,9 @@ class Department extends Model
         return $this->belongsTo(Organization::class, 'organization_id');
     }
 
-    public function created_by()
+    public function createdBy()
     {
-        return $this->belongsTo(User::class, 'created_by_id');
+        return $this->belongsTo(User::class, 'created_by','user_name');
     }
 
     public function team()

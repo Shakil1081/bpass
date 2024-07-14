@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BarCode extends Model
 {
-    use SoftDeletes, HasFactory;
+//    use SoftDeletes, HasFactory;
+    use  HasFactory;
 
-    public $table = 'bar_codes';
+//    public $table = 'bar_codes';
+    public $table = 'bar_code';
 
     protected $fillable = [
         'created_by',

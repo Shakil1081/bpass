@@ -12,9 +12,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PurchaseOrder extends Model
 {
-    use SoftDeletes, MultiTenantModelTrait, Auditable, HasFactory;
+//    use SoftDeletes, MultiTenantModelTrait, Auditable, HasFactory;
+    use MultiTenantModelTrait, Auditable, HasFactory;
 
-    public $table = 'purchase_orders';
+//    public $table = 'purchase_orders';
+    public $table = 'purchase_order';
 
     protected $dates = [
         'issue_date',

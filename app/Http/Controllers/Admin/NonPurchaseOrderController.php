@@ -33,7 +33,7 @@ class NonPurchaseOrderController extends Controller
         abort_if(Gate::denies('non_purchase_order_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = NonPurchaseOrder::with(['created_by', 'updated_by', 'organization'])->select(sprintf('%s.*', (new NonPurchaseOrder)->table));
+            $query = NonPurchaseOrder::with(['organization'])->select(sprintf('%s.*', (new NonPurchaseOrder)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -57,12 +57,12 @@ class NonPurchaseOrderController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
-            $table->addColumn('created_by_name', function ($row) {
-                return $row->created_by ? $row->created_by->name : '';
+            $table->addColumn('created_by', function ($row) {
+                return $row->created_by ? $row->created_by : '';
             });
 
-            $table->addColumn('updated_by_name', function ($row) {
-                return $row->updated_by ? $row->updated_by->name : '';
+            $table->addColumn('updated_by', function ($row) {
+                return $row->updated_by ? $row->updated_by : '';
             });
 
             $table->editColumn('actual_payable_amount', function ($row) {

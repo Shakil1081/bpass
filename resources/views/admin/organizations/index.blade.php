@@ -99,8 +99,8 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'created_by_name', name: 'created_by.name' },
-{ data: 'updated_by_name', name: 'updated_by.name' },
+{ data: 'created_by_name', name: 'created_by.full_name' },
+{ data: 'updated_by_name', name: 'updated_by.full_name' },
 { data: 'address', name: 'address' },
 { data: 'is_corporate', name: 'is_corporate' },
 { data: 'name', name: 'name' },
@@ -116,7 +116,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 });
 
 </script>

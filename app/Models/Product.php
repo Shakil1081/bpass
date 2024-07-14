@@ -9,9 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class Product extends Model
 {
-    use SoftDeletes, HasFactory;
+//    use SoftDeletes, HasFactory;
+    use HasFactory;
 
-    public $table = 'products';
+//    public $table = 'products';
+    public $table = 'product';
 
     protected $fillable = [
         'created_by',

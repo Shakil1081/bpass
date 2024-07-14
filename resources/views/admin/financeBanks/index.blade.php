@@ -103,7 +103,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'created_by_name', name: 'created_by.name' },
+{ data: 'created_by_name', name: 'created_by.full_name' },
 { data: 'updated_by', name: 'updated_by' },
 { data: 'finance_bank_name', name: 'finance_bank_name' },
 { data: 'routing_number', name: 'routing_number' },
@@ -120,7 +120,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 });
 
 </script>

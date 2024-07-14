@@ -13,9 +13,11 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Organization extends Model implements HasMedia
 {
-    use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;
+//    use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;
+    use InteractsWithMedia, Auditable, HasFactory;
 
-    public $table = 'organizations';
+//    public $table = 'organizations';
+    public $table = 'organization';
 
     protected $appends = [
         'logo',
@@ -27,9 +29,14 @@ class Organization extends Model implements HasMedia
         'deleted_at',
     ];
 
+//    public const IS_CORPORATE_SELECT = [
+//        'Yes' => 'Yes',
+//        'No'  => 'No',
+//    ];
+
     public const IS_CORPORATE_SELECT = [
-        'Yes' => 'Yes',
-        'No'  => 'No',
+        'Y' => 'Yes',
+        'N'  => 'No',
     ];
 
     protected $fillable = [
@@ -55,14 +62,14 @@ class Organization extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
-    public function created_by()
+    public function createdBy()
     {
-        return $this->belongsTo(User::class, 'created_by_id');
+        return $this->belongsTo(User::class, 'created_by','user_name');
     }
 
-    public function updated_by()
+    public function updatedBy()
     {
-        return $this->belongsTo(User::class, 'updated_by_id');
+        return $this->belongsTo(User::class, 'updated_by','user_name');
     }
 
     public function getLogoAttribute()

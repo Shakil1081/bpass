@@ -23,7 +23,7 @@ class FinanceBankController extends Controller
         abort_if(Gate::denies('finance_bank_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = FinanceBank::with(['created_by', 'team'])->select(sprintf('%s.*', (new FinanceBank)->table));
+            $query = FinanceBank::with(['createdBy', 'team'])->select(sprintf('%s.*', (new FinanceBank)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -48,7 +48,7 @@ class FinanceBankController extends Controller
                 return $row->id ? $row->id : '';
             });
             $table->addColumn('created_by_name', function ($row) {
-                return $row->created_by ? $row->created_by->name : '';
+                return $row->createdBy ? $row->createdBy->full_name : '';
             });
 
             $table->editColumn('finance_bank_name', function ($row) {

@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PartyBill extends Model
 {
-    use SoftDeletes, HasFactory;
+//    use SoftDeletes, HasFactory;
+    use  HasFactory;
 
-    public $table = 'party_bills';
+//    public $table = 'party_bills';
+    public $table = 'party_bill';
 
     protected $fillable = [
         'created_by',

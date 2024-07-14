@@ -24,7 +24,7 @@ class OrganizationController extends Controller
         abort_if(Gate::denies('organization_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Organization::with(['created_by', 'updated_by'])->select(sprintf('%s.*', (new Organization)->table));
+            $query = Organization::with(['createdBy', 'updatedBy'])->select(sprintf('%s.*', (new Organization)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -49,11 +49,11 @@ class OrganizationController extends Controller
                 return $row->id ? $row->id : '';
             });
             $table->addColumn('created_by_name', function ($row) {
-                return $row->created_by ? $row->created_by->name : '';
+                return $row->createdBy ? $row->createdBy->full_name : '';
             });
 
             $table->addColumn('updated_by_name', function ($row) {
-                return $row->updated_by ? $row->updated_by->name : '';
+                return $row->updatedBy ? $row->updatedBy->full_name : '';
             });
 
             $table->editColumn('address', function ($row) {

@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BankAccount extends Model
 {
-    use SoftDeletes, HasFactory;
+//    use SoftDeletes, HasFactory;
+    use  HasFactory;
 
-    public $table = 'bank_accounts';
+//    public $table = 'bank_accounts';
+    public $table = 'bank_account';
 
     protected $fillable = [
         'created_by',
