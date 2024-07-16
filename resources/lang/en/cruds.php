@@ -802,6 +802,8 @@ return [
         'fields'         => [
             'id'                        => 'ID',
             'id_helper'                 => ' ',
+            'organization_id'             => 'Organization',
+            'organization_id_helper'      => ' ',
             'department_id'             => 'Requisition Form',
             'department_id_helper'      => ' ',
             'mpr_date'                  => 'MPR Date',
@@ -917,8 +919,6 @@ return [
             'updated_at_helper'       => ' ',
         ],
     ],
-
-
 
     'non_purchase_order_entry' => [
         'title'          => 'Non Purchase Order Entry',
@@ -1036,6 +1036,53 @@ return [
 
             'terms_and_conditions'              => 'Terms & Conditions',
             'terms_and_conditions_helper'       => ' ',
+
+            'created_at'              => 'Created At',
+            'created_at_helper'       => ' ',
+            'updated_at'              => 'Updated At',
+            'updated_at_helper'       => ' ',
+        ],
+    ],
+
+    'invoice_report' => [
+        'title'          => 'Invoice Report',
+        'title_singular' => 'Invoice Report',
+        'fields'         => [
+            'id'                 => 'ID',
+            'id_helper'          => ' ',
+            'created_by'              => 'Created By',
+            'created_by_helper'       => ' ',
+            'updated_by'       => 'Updated By',
+            'updated_by_helper'       => ' ',
+            'unit'         => 'Unit',
+            'unit_helper'  => ' ',
+            'supplier_name'         => 'Supplier Name',
+            'supplier_name_helper'  => ' ',
+            'invoice_no'              => 'Invoice/Barcode No',
+            'invoice_no_helper'       => ' ',
+            'bill_ref'              => 'Bill Ref',
+            'bill_ref_helper'       => ' ',
+            'bill_amount'              => 'Bill Amount',
+            'bill_amount_helper'       => ' ',
+            'payable_amount'              => 'Payable Amount',
+            'payable_amount_helper'       => ' ',
+            'po_amount'              => 'PO Amount',
+            'po_amount_helper'       => ' ',
+            'po_no'              => 'PO No #',
+            'po_no_helper'       => ' ',
+            'po_date'              => 'PO Amount',
+            'po_date_helper'       => ' ',
+            'req_form'              => 'Req. Form',
+            'req_form_helper'       => ' ',
+
+            'mpr'              => 'MPR#',
+            'mpr_helper'       => ' ',
+            'mpr_rcv_date'              => 'MPR Rcv Date',
+            'mpr_rcv_date_helper'       => ' ',
+            'cre_period'              => 'Cre. Period (Days)',
+            'cre_period_helper'       => ' ',
+
+
 
             'created_at'              => 'Created At',
             'created_at_helper'       => ' ',

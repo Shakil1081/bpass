@@ -187,7 +187,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'updated_by_name', name: 'updated_by.name' },
+{ data: 'updated_by', name: 'updated_by' },
 { data: 'actual_payable_amount', name: 'actual_payable_amount' },
 { data: 'advance_amount', name: 'advance_amount' },
 { data: 'amount_in_words', name: 'amount_in_words' },
@@ -216,7 +216,7 @@
 { data: 'total_amount', name: 'total_amount' },
 { data: 'vat_amount', name: 'vat_amount' },
 { data: 'organization_address', name: 'organization.address' },
-{ data: 'approved_by_name', name: 'approved_by.name' },
+{ data: 'approvedBy', name: 'approvedBy.user_name' },
 { data: 'is_deleted', name: 'is_deleted' },
 { data: 'deleted', name: 'deleted' },
 { data: 'requisition_requisition_date', name: 'requisition.requisition_date' },

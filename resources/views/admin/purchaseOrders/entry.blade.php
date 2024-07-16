@@ -10,13 +10,28 @@
 
             <div class="card-body">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="required" for="organization_id">{{ trans('cruds.purchase_order_entry.fields.organization_id') }}</label>
+                            <select class="form-control select2 {{ $errors->has('organization_id') ? 'is-invalid' : '' }} organization_id" name="organization_id" id="organization_id" required>
+                                @foreach($organization as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('organization_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('department_id'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('department_id') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.purchase_order_entry.fields.organization_id_helper') }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
                         <div class="form-group">
                             <label class="required" for="department_id">{{ trans('cruds.purchase_order_entry.fields.department_id') }}</label>
                             <select class="form-control select2 {{ $errors->has('department_id') ? 'is-invalid' : '' }} department_id" name="department_id" id="department_id" required>
-                                @foreach($department as $id => $entry)
-                                    <option value="{{ $id }}" {{ old('created_by') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                @endforeach
+                                <option value="">{{ trans('global.pleaseSelect') }}</option>
                             </select>
                             @if($errors->has('department_id'))
                                 <div class="invalid-feedback">
@@ -26,7 +41,8 @@
                             <span class="help-block">{{ trans('cruds.purchase_order_entry.fields.department_id_helper') }}</span>
                         </div>
                     </div>
-                    <div class="col-4">
+
+                    <div class="col-6">
                         <div class="form-group">
                             <label class="required" for="reference_date">{{ trans('cruds.purchase_order_entry.fields.mpr_date') }}</label>
                             <input class="form-control date {{ $errors->has('mpr_date') ? 'is-invalid' : '' }}" type="text" name="mpr_date" id="mpr_date" value="{{ old('mpr_date') }}" required>
@@ -39,7 +55,7 @@
                         </div>
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-6">
                         <div class="form-group">
                             <label class="required" for="budget_ref_no">{{ trans('cruds.purchase_order_entry.fields.budget_ref_no') }}</label>
                             <input class="form-control {{ $errors->has('budget_ref_no') ? 'is-invalid' : '' }}" type="text" name="budget_ref_no" id="budget_ref_no" value="{{ old('budget_ref_no') }}" required>
@@ -583,8 +599,8 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="budget">{{ trans('cruds.purchase_order_entry.fields.budget') }}</label>
-                            <input class="form-control budget {{ $errors->has('budget') ? 'is-invalid' : '' }}" type="text" name="budget" id="budget" value="{{ old('budget', '') }}" readonly>
+                            <label class="required" for="budget">{{ trans('cruds.purchase_order_entry.fields.budget') }}</label>
+                            <input class="form-control budget {{ $errors->has('budget') ? 'is-invalid' : '' }}" type="text" name="budget" id="budget" value="{{ old('budget', '') }}" readonly required>
                             @if($errors->has('budget'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('budget') }}
@@ -596,8 +612,8 @@
 
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="budget_remaining">{{ trans('cruds.purchase_order_entry.fields.budget_remaining') }}</label>
-                            <input class="form-control budget_remaining {{ $errors->has('budget_remaining') ? 'is-invalid' : '' }}" type="text" name="budget_remaining" id="budget_remaining" value="{{ old('budget_remaining', '') }}" readonly>
+                            <label class="required" for="budget_remaining">{{ trans('cruds.purchase_order_entry.fields.budget_remaining') }}</label>
+                            <input class="form-control budget_remaining {{ $errors->has('budget_remaining') ? 'is-invalid' : '' }}" type="text" name="budget_remaining" id="budget_remaining" value="{{ old('budget_remaining', '') }}" readonly required>
                             @if($errors->has('budget_remaining'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('budget_remaining') }}
@@ -678,6 +694,29 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/number-to-words"></script>
 @section('scripts')
+    <script>
+        $(document).ready(function (){
+            $('select[name="organization_id"]').on('change',function (){
+                var organization_id = $(this).val();
+                $('#purchase_order').val('')
+                if (organization_id){
+                    $.ajax({
+                        url: '{{ route("admin.get-requisition-department") }}',
+                        type: 'GET',
+                        data: { organization_id: organization_id },
+                        success:function (data){
+                            var d = $('select[name="department_id"]').empty();
+                            $.each(data.departments,function (key,value){
+                                $('select[name="department_id"]').append('<option value="'+ value.id +'">' + value.department_name + '</option>');
+                            });
+                        },
+                    });
+                } else {
+                    alert('danger');
+                }
+            });
+        });
+    </script>
     <script>
         $(document).ready(function() {
             var budgetAmount = 0;
@@ -781,12 +820,14 @@
 
             $('.department_id').change(function() {
                 var departmentId = $(this).val();
+                var organization_id = $('#organization_id').val();
+                console.log(organization_id)
                 if (departmentId) {
                     // Fetch purchase order first
                     $.ajax({
                         url: '{{ route("admin.get-purchase-order") }}',
                         type: 'GET',
-                        data: { department_id: departmentId },
+                        data: { department_id: departmentId, organization_id: organization_id },
                         success: function(response) {
                             if (response.success) {
                                 $('#purchase_order').val(response.purchase_order);
@@ -821,13 +862,6 @@
                     // Handle case when departmentId is empty
                 }
             });
-        });
-    </script>
-
-
-    <script>
-        $(document).ready(function() {
-
         });
     </script>
 

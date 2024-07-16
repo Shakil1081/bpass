@@ -110,6 +110,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('purchase-orders/process-csv-import', 'PurchaseOrderController@processCsvImport')->name('purchase-orders.processCsvImport');
 
     //new added
+
+    Route::get('budget-details/get-requisition-department', 'PurchaseOrderController@getRequisitionDepartment')->name('get-requisition-department');
+
     Route::get('purchase-orders/entry', 'PurchaseOrderController@purchaseOrderEntry')->name('purchase-orders.entry');
     Route::get('purchase-orders/get-purchase-order', 'PurchaseOrderController@getPurchaseOrder')->name('get-purchase-order');
 
@@ -147,6 +150,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('team-members', 'TeamMembersController@index')->name('team-members.index');
     Route::post('team-members', 'TeamMembersController@invite')->name('team-members.invite');
+
+
+    Route::get('invoice/invoice-report', 'InvoiceController@invoiceReport')->name('invoice.report');
+    Route::get('invoice/invoice-report/generate-pdf', 'InvoiceController@invoiceReportGeneratePDF')->name('invoice.report.generate-pdf');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

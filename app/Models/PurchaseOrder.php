@@ -113,9 +113,9 @@ class PurchaseOrder extends Model
         return $this->belongsTo(Organization::class, 'organization_id');
     }
 
-    public function approved_by()
+    public function approvedBy()
     {
-        return $this->belongsTo(User::class, 'approved_by_id');
+        return $this->belongsTo(User::class, 'approved_by');
     }
 
     public function getDeletedAttribute($value)

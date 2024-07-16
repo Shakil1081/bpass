@@ -35,6 +35,10 @@ class Product extends Model
         'uom',
     ];
 
+
+//    const UPDATED_AT = null;
+//    const CREATED_AT = null;
+
     public function createdInfo()
     {
         return $this->belongsTo(User::class, 'created_by');

@@ -223,6 +223,8 @@ class ProductController extends Controller
     public function updateOrderProducts(Request $request)
     {
         $orderId = $request->order_id;
+        $orderType = $request->order_type;
+
         $products = $request->input('products', []);
 
         $rules = [
@@ -251,7 +253,13 @@ class ProductController extends Controller
             }
         }
 
-        $orderDetails = PurchaseOrder::findOrFail($orderId);
+        if ($orderType == 'non_purchase_order'){
+            $orderDetails = NonPurchaseOrder::findOrFail($orderId);
+        }else{
+            $orderDetails = PurchaseOrder::findOrFail($orderId);
+        }
+
+
 
         $totalAmountOrder = $finalTotalPrice + $orderDetails->carr_load_up_amount - $orderDetails->discount_amount;
 

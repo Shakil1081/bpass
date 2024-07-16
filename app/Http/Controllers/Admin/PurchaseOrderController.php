@@ -31,7 +31,7 @@ class PurchaseOrderController extends Controller
         abort_if(Gate::denies('purchase_order_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = PurchaseOrder::with(['updated_by', 'organization', 'approved_by', 'requisition', 'team'])->select(sprintf('%s.*', (new PurchaseOrder)->table));
+            $query = PurchaseOrder::with(['updated_by', 'organization', 'approvedBy', 'requisition', 'team'])->select(sprintf('%s.*', (new PurchaseOrder)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -55,8 +55,8 @@ class PurchaseOrderController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
-            $table->addColumn('updated_by_name', function ($row) {
-                return $row->updated_by ? $row->updated_by->name : '';
+            $table->addColumn('updated_by', function ($row) {
+                return $row->updated_by ? $row->updated_by : '';
             });
 
             $table->editColumn('actual_payable_amount', function ($row) {
@@ -138,8 +138,8 @@ class PurchaseOrderController extends Controller
                 return $row->organization ? $row->organization->address : '';
             });
 
-            $table->addColumn('approved_by_name', function ($row) {
-                return $row->approved_by ? $row->approved_by->name : '';
+            $table->addColumn('approvedBy', function ($row) {
+                return $row->approvedBy ? $row->approvedBy->user_name : '';
             });
 
             $table->editColumn('is_deleted', function ($row) {
@@ -236,9 +236,25 @@ class PurchaseOrderController extends Controller
     public function purchaseOrderEntry(Request $request)
     {
         //$request->session()->forget('product_details');
-        $department = Department::pluck('department_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        //$department = Department::pluck('department_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $organization = Organization::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.purchaseOrders.entry', compact( 'department'));
+        return view('admin.purchaseOrders.entry', compact( 'organization'));
+    }
+
+    public function getRequisitionDepartment(Request $request)
+    {
+        $departments = Department::where('organization_id', $request->organization_id)->get();
+        if ($departments) {
+            return response()->json([
+                'success' => true,
+                'departments' => $departments
+            ]);
+        } else {
+            return response()->json([
+                'success' => false
+            ]);
+        }
     }
 
     public function getPurchaseOrder(Request $request)
@@ -247,10 +263,12 @@ class PurchaseOrderController extends Controller
             ->whereYear('created_at', Carbon::now()->year)
             ->get();
 
+        $organization = Organization::where('id',$request->organization_id)->value('short_name');
+
         $orderCount = $PurOrders->count() + 1;
         $orderCountPadded = str_pad($orderCount, 5, '0', STR_PAD_LEFT);
 
-        $purchaseOrder = 'BRL-' . Carbon::today()->format('Y') . '-' . Carbon::today()->format('m') . '-' . $orderCountPadded;
+        $purchaseOrder = $organization.' -' . Carbon::today()->format('Y') . '-' . Carbon::today()->format('m') . '-' . $orderCountPadded;
 
         if ($purchaseOrder) {
             return response()->json([
@@ -308,6 +326,7 @@ class PurchaseOrderController extends Controller
             'total_amount' => $request->input('total_amount'),
             'vat_amount' => $request->input('vat_amount'),
             'requisition_id' => $requisition->id,
+            'organization_id' => $requisition->organization_id,
         ]);
 
         $productDetails = json_decode($request->product_details);

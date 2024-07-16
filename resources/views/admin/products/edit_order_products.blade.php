@@ -27,6 +27,7 @@
             <form id="productsForm" method="POST" action="{{ route('admin.order-products.update') }}">
                 @csrf
                 <input type="hidden" name="order_id" id="hiddenOrderId">
+                <input type="hidden" name="order_type" id="hiddenOrderType">
                 <table class="table table-bordered table-striped table-hover ajaxTable datatable datatable-Organization">
                     <thead>
                     <tr>
@@ -83,15 +84,18 @@
                 select: function(event, ui) {
                     $("#orderId").val(ui.item.label);
                     var selectedOrderId = ui.item.value;
+                    var orderType = $("#orderType").val();
                     $("#hiddenOrderId").val(selectedOrderId);
+                    $("#hiddenOrderType").val(orderType);
                     console.log("Selected Order ID: " + selectedOrderId);
+                    console.log("Selected Order type: " + orderType);
 
                     var fetchProductsUrl = "{{ url('admin/fetch-products') }}" + "/" + selectedOrderId;
                     $.ajax({
                         url: fetchProductsUrl,
                         dataType: "json",
                         data: {
-                            orderType: $("#orderType").val()
+                            orderType: orderType
                         },
                         type: 'GET',
                         success: function(products) {

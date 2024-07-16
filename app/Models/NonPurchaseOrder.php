@@ -27,8 +27,8 @@ class NonPurchaseOrder extends Model
     ];
 
     protected $fillable = [
-        'created_by_id',
-        'updated_by_id',
+        'created_by',
+        'updated_by',
         'actual_payable_amount',
         'advance_amount',
         'cell_no',
@@ -97,13 +97,13 @@ class NonPurchaseOrder extends Model
         parent::boot();
         self::creating(function($model) {
             if (Auth::user()){
-                $model->created_by_id = Auth::user()->id;
+                $model->created_by = Auth::user()->id;
             }
         });
 
         self::updating(function($model) {
             if (Auth::user()){
-                $model->updated_by_id = Auth::user()->id;
+                $model->updated_by = Auth::user()->id;
             }
         });
 

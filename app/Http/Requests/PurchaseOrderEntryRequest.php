@@ -22,6 +22,7 @@ class PurchaseOrderEntryRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'organization_id' => 'required',
             'department_id' => 'required',
             'budget_ref_no' => 'required',
             'mpr_date' => 'required',
@@ -41,6 +42,8 @@ class PurchaseOrderEntryRequest extends FormRequest
             'unit_price.*' => 'required',
             'total_amount' => 'required',
             'net_payable_amount' => 'required',
+            'budget' => 'required',
+            'budget_remaining' => 'required',
             'terms_and_conditions.*' => 'required',
         ];
     }
