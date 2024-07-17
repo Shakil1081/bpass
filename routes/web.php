@@ -154,6 +154,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('invoice/invoice-report', 'InvoiceController@invoiceReport')->name('invoice.report');
     Route::get('invoice/invoice-report/generate-pdf', 'InvoiceController@invoiceReportGeneratePDF')->name('invoice.report.generate-pdf');
+    Route::get('invoice/invoice-report/generate-excel', 'InvoiceController@invoiceReportGenerateExcel')->name('invoice.report.generate-excel');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

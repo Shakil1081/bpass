@@ -46,6 +46,50 @@
             <th>{{ trans('cruds.invoice_report.fields.cre_period') }}</th>
         </tr>
         </thead>
+        @foreach($invoices as $invoice)
+            <tr>
+                <td>
+                    {{ $invoice->organization->short_name }}
+                </td>
+                <td>
+                    {{ $invoice->supplier_id }}
+                </td>
+                <td>
+                    {{ $invoice->invoice_no }}
+                </td>
+                <td>
+                    {{ $invoice->purchaseOrder->reference_no }}
+                </td>
+                <td>
+                    {{ $invoice->invoice_amount }}
+                </td>
+                <td>
+                    {{ $invoice->purchaseOrder->actual_payable_amount }}
+                </td>
+                <td>
+                    {{ $invoice->purchaseOrder->total_amount }}
+                </td>
+                <td>
+                    {{ $invoice->purchaseOrder->purchase_order_no }}
+                </td>
+                <td>
+                    {{ $invoice->purchaseOrder->issue_date }}
+                </td>
+
+                <td>
+                    {{ $invoice->purchaseOrder->requisition->department->department_name }}
+                </td>
+                <td>
+                    {{ $invoice->purchaseOrder->mpr_no }}
+                </td>
+                <td>
+                    {{ $invoice->purchaseOrder->mpr_date }}
+                </td>
+                <td>
+                    {{ $invoice->purchaseOrder->credit_limit }}
+                </td>
+            </tr>
+        @endforeach
     </table>
 </body>
 </html>

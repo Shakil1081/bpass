@@ -1070,7 +1070,7 @@ return [
             'po_amount_helper'       => ' ',
             'po_no'              => 'PO No #',
             'po_no_helper'       => ' ',
-            'po_date'              => 'PO Amount',
+            'po_date'              => 'PO Date',
             'po_date_helper'       => ' ',
             'req_form'              => 'Req. Form',
             'req_form_helper'       => ' ',
