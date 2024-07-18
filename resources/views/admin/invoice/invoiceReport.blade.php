@@ -18,12 +18,17 @@
                 <div class="row">
                     <div class="col-4">
                         <div class="form-group">
-                            <input type="text" class="form-control {{ $errors->has('date_range') ? 'is-invalid' : '' }}" name="date_range" value="{{ request('date_range') }}" />
+                            <input type="text" class="form-control {{ $errors->has('date_range') ? 'is-invalid' : '' }}" name="date_range" value="{{ request('date_range') }}" style="height: 30px"/>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <input type="text" name="supplier_id" id="supplier_id" class="form-control" value="{{ old('supplier_id') }}">
+                            <select class="form-control select2 {{ $errors->has('organization') ? 'is-invalid' : '' }} organization" name="organization" id="organization">
+                                <option selected disabled>Select Organization</option>
+                                @foreach($organization as $id => $entry)
+                                    <option value="{{ $id }}" {{ request('organization') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="col-4">

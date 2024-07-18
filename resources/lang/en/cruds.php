@@ -1056,6 +1056,8 @@ return [
             'updated_by_helper'       => ' ',
             'unit'         => 'Unit',
             'unit_helper'  => ' ',
+            'organization'         => 'Organization',
+            'organization_helper'  => ' ',
             'supplier_name'         => 'Supplier Name',
             'supplier_name_helper'  => ' ',
             'invoice_no'              => 'Invoice/Barcode No',

@@ -18,10 +18,13 @@ class InvoiceReportExcelExport implements FromCollection, WithHeadings, WithTitl
     protected $startDate;
     protected $endDate;
 
-    public function __construct($startDate = null, $endDate = null)
+    protected $organization;
+
+    public function __construct($startDate = null, $endDate = null, $organization=null)
     {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
+        $this->organization = $organization;
     }
 
     public function collection()
@@ -35,6 +38,11 @@ class InvoiceReportExcelExport implements FromCollection, WithHeadings, WithTitl
             $invoicesQuery->whereDate('invoice_date', '>=', $this->startDate)
                 ->whereDate('invoice_date', '<=', $this->endDate);
         }
+
+        if ($this->organization){
+            $invoicesQuery->where('organization_id', $this->organization);
+        }
+
 
         $invoices = $invoicesQuery->get();
 

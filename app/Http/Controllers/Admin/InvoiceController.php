@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\InvoiceReportExcelExport;
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
+use App\Models\Organization;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,6 +16,7 @@ class InvoiceController extends Controller
     public function invoiceReport(Request $request)
     {
         $dateRange = $request->input('date_range');
+        $organization = $request->input('organization');
         // Start the query
         $invoicesQuery = Invoice::where('purchase_order_id', '!=', null)
             ->with(['purchaseOrder', 'organization']);
@@ -27,16 +29,24 @@ class InvoiceController extends Controller
 
             $invoicesQuery->whereDate('invoice_date', '>=', $startDate)
                 ->whereDate('invoice_date', '<=', $endDate);
+        }else{
+            $invoicesQuery->whereDate('invoice_date', '>=', Carbon::today()->format('Y-m-d'))
+                ->whereDate('invoice_date', '<=', Carbon::today()->format('Y-m-d'));
         }
 
+        if ($organization){
+            $invoicesQuery->where('organization_id', $organization);
+        }
         $invoices = $invoicesQuery->orderBy('id', 'DESC')->paginate(30);
 
-        return view('admin.invoice.invoiceReport', compact('invoices'));
+        $organization = Organization::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        return view('admin.invoice.invoiceReport', compact('invoices','organization'));
     }
 
     public function invoiceReportGeneratePDF(Request $request)
     {
         $dateRange = $request->input('date_range');
+        $organization = $request->input('organization');
 
         $invoicesQuery = Invoice::where('purchase_order_id', '!=', null)
             ->with(['purchaseOrder', 'organization']);
@@ -51,6 +61,10 @@ class InvoiceController extends Controller
                 ->whereDate('invoice_date', '<=', $endDate);
         }
 
+        if ($organization){
+            $invoicesQuery->where('organization_id', $organization);
+        }
+
         $invoices = $invoicesQuery->orderBy('id', 'DESC')->get();
 
         $customPaper = array(0,0,1280,596);
@@ -61,6 +75,7 @@ class InvoiceController extends Controller
     public function invoiceReportGenerateExcel(Request $request)
     {
         $dateRange = $request->input('date_range');
+        $organization = $request->input('organization');
 
         if ($dateRange) {
             list($startDate, $endDate) = explode(' - ', str_replace('+', ' ', $dateRange));
@@ -72,6 +87,6 @@ class InvoiceController extends Controller
             $endDate = null;
         }
 
-        return Excel::download(new InvoiceReportExcelExport($startDate, $endDate), 'table-data.xlsx');
+        return Excel::download(new InvoiceReportExcelExport($startDate, $endDate,$organization), 'table-data.xlsx');
     }
 }
