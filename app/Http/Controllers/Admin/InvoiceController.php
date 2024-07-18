@@ -45,32 +45,45 @@ class InvoiceController extends Controller
 
     public function invoiceReportGeneratePDF(Request $request)
     {
-        $dateRange = $request->input('date_range');
-        $organization = $request->input('organization');
+        $validatedData = $request->validate([
+            'date_range' => 'nullable|string',
+            'organization' => 'nullable|integer|exists:organization,id'
+        ]);
 
-        $invoicesQuery = Invoice::where('purchase_order_id', '!=', null)
+        $dateRange = $validatedData['date_range'] ?? null;
+        $organization = $validatedData['organization'] ?? null;
+
+        $invoicesQuery = Invoice::whereNotNull('purchase_order_id')
             ->with(['purchaseOrder', 'organization']);
 
         if ($dateRange) {
-            list($startDate, $endDate) = explode(' - ', $dateRange);
+            try {
+                list($startDate, $endDate) = explode(' - ', $dateRange);
+                $startDate = Carbon::createFromFormat('d/m/Y', $startDate)->format('Y-m-d');
+                $endDate = Carbon::createFromFormat('d/m/Y', $endDate)->format('Y-m-d');
 
-            $startDate = Carbon::createFromFormat('d/m/Y', $startDate)->format('Y-m-d');
-            $endDate = Carbon::createFromFormat('d/m/Y', $endDate)->format('Y-m-d');
-
-            $invoicesQuery->whereDate('invoice_date', '>=', $startDate)
-                ->whereDate('invoice_date', '<=', $endDate);
+                $invoicesQuery->whereDate('invoice_date', '>=', $startDate)
+                    ->whereDate('invoice_date', '<=', $endDate);
+            } catch (\Exception $e) {
+                return back()->withErrors(['date_range' => 'Invalid date range format']);
+            }
         }
 
-        if ($organization){
+        $organizationName = 'ALL';
+        if ($organization) {
             $invoicesQuery->where('organization_id', $organization);
+            $organizationName = Organization::findOrFail($organization)->name;
         }
 
         $invoices = $invoicesQuery->orderBy('id', 'DESC')->get();
 
-        $customPaper = array(0,0,1280,596);
-        $pdf = PDF::loadView('admin.invoice.invoiceReportPDF',compact('invoices'))->setPaper($customPaper);
+        $customPaper = [0, 0, 1280, 596];
+        $pdf = PDF::loadView('admin.invoice.invoiceReportPDF', compact('invoices', 'organizationName', 'dateRange'))
+            ->setPaper($customPaper);
+
         return $pdf->download('invoice-report.pdf');
     }
+
 
     public function invoiceReportGenerateExcel(Request $request)
     {
