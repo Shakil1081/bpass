@@ -1,6 +1,0 @@
-1. Rename user_role table to role_user
-   RENAME TABLE `BPAS_LIVE_20230324`.`role_user_` TO `BPAS_LIVE_20230324`.`role_user`;
-
-
-2. Permission Table Add
-3. Permission Role table add
