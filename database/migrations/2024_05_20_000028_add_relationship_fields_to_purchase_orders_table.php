@@ -17,8 +17,8 @@ class AddRelationshipFieldsToPurchaseOrdersTable extends Migration
             $table->foreign('approved_by_id', 'approved_by_fk_9802193')->references('id')->on('users');
             $table->unsignedBigInteger('requisition_id')->nullable();
             $table->foreign('requisition_id', 'requisition_fk_9802218')->references('id')->on('requisitions');
-            $table->unsignedBigInteger('team_id')->nullable();
-            $table->foreign('team_id', 'team_fk_9802199')->references('id')->on('teams');
+//            $table->unsignedBigInteger('team_id')->nullable();
+//            $table->foreign('team_id', 'team_fk_9802199')->references('id')->on('teams');
         });
     }
 }
