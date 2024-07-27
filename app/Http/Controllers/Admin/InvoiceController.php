@@ -17,11 +17,8 @@ class InvoiceController extends Controller
     {
         $dateRange = $request->input('date_range');
         $organization = $request->input('organization');
-        // Start the query
-        $invoicesQuery = Invoice::with([ 'purchaseOrder' => function ($query) {
-            // Apply the scope to ignore `team_id`
-            $query->withoutTeamId();
-        }, 'organization']);
+
+        $invoicesQuery = Invoice::with([ 'purchaseOrder','organization']);
 dd($invoicesQuery->get());
         if ($dateRange) {
             list($startDate, $endDate) = explode(' - ', $dateRange);
