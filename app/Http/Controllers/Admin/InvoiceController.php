@@ -18,8 +18,8 @@ class InvoiceController extends Controller
         $dateRange = $request->input('date_range');
         $organization = $request->input('organization');
 
-        $invoicesQuery = Invoice::with([ 'purchaseOrder','organization']);
-dd($invoicesQuery->get());
+        $invoicesQuery = Invoice::with(['purchaseOrder', 'organization']);
+
         if ($dateRange) {
             list($startDate, $endDate) = explode(' - ', $dateRange);
 
@@ -28,15 +28,23 @@ dd($invoicesQuery->get());
 
             $invoicesQuery->whereDate('invoice_date', '>=', $startDate)
                 ->whereDate('invoice_date', '<=', $endDate);
-        }else{
+        } else {
             $invoicesQuery->whereDate('invoice_date', '>=', Carbon::today()->format('Y-m-d'))
                 ->whereDate('invoice_date', '<=', Carbon::today()->format('Y-m-d'));
         }
 
-        if ($organization){
+        if ($organization) {
             $invoicesQuery->where('organization_id', $organization);
         }
+
         $invoices = $invoicesQuery->orderBy('id', 'DESC')->paginate(30);
+
+        // Append the date_range and organization parameters to the pagination links
+        $invoices->appends([
+            'date_range' => $dateRange,
+            'organization' => $organization,
+        ]);
+
 
         $organization = Organization::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         return view('admin.invoice.invoiceReport', compact('invoices','organization'));

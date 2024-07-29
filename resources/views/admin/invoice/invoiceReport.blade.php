@@ -103,35 +103,35 @@
                             {{ $invoice->invoice_no }}
                         </td>
                         <td>
-                            {{ $invoice->purchaseOrder->reference_no }}
+                            {{ $invoice->purchaseOrder->reference_no ?? '' }}
                         </td>
                         <td>
                             {{ $invoice->invoice_amount }}
                         </td>
                         <td>
-                            {{ $invoice->purchaseOrder->actual_payable_amount }}
+                            {{ $invoice->purchaseOrder->actual_payable_amount ?? '' }}
                         </td>
                         <td>
-                            {{ $invoice->purchaseOrder->total_amount }}
+                            {{ $invoice->purchaseOrder->total_amount ?? '' }}
                         </td>
                         <td>
-                            {{ $invoice->purchaseOrder->purchase_order_no }}
+                            {{ $invoice->purchaseOrder->purchase_order_no ?? '' }}
                         </td>
                         <td>
-                            {{ $invoice->purchaseOrder->issue_date }}
+                            {{ $invoice->purchaseOrder->issue_date ?? '' }}
                         </td>
 
                         <td>
-                            {{ $invoice->purchaseOrder->requisition->department->department_name }}
+                            {{ $invoice->purchaseOrder->requisition->department->department_name ?? '' }}
                         </td>
                         <td>
-                            {{ $invoice->purchaseOrder->mpr_no }}
+                            {{ $invoice->purchaseOrder->mpr_no ?? '' }}
                         </td>
                         <td>
-                            {{ $invoice->purchaseOrder->mpr_date }}
+                            {{ $invoice->purchaseOrder->mpr_date ?? '' }}
                         </td>
                         <td>
-                            {{ $invoice->purchaseOrder->credit_limit }}
+                            {{ $invoice->purchaseOrder->credit_limit ?? '' }}
                         </td>
                     </tr>
                 @endforeach
