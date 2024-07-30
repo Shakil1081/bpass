@@ -31,8 +31,7 @@ class InvoiceReportExcelExport implements FromCollection, WithHeadings, WithTitl
     {
         $invoicesQuery = Invoice::where('purchase_order_id', '!=', null)
             ->with(['purchaseOrder.requisition.department', 'organization'])
-            ->orderBy('id', 'DESC')
-            ->limit(40);
+            ->orderBy('id', 'DESC');
 
         if ($this->startDate && $this->endDate) {
             $invoicesQuery->whereDate('invoice_date', '>=', $this->startDate)
