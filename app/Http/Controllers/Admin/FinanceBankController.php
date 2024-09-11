@@ -76,7 +76,7 @@ class FinanceBankController extends Controller
     {
         abort_if(Gate::denies('finance_bank_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $created_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $created_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.financeBanks.create', compact('created_bies'));
     }
@@ -92,9 +92,9 @@ class FinanceBankController extends Controller
     {
         abort_if(Gate::denies('finance_bank_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $created_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $created_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $financeBank->load('created_by', 'team');
+        $financeBank->load('createdBy', 'team');
 
         return view('admin.financeBanks.edit', compact('created_bies', 'financeBank'));
     }
@@ -110,7 +110,7 @@ class FinanceBankController extends Controller
     {
         abort_if(Gate::denies('finance_bank_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $financeBank->load('created_by', 'team');
+        $financeBank->load('createdBy', 'team');
 
         return view('admin.financeBanks.show', compact('financeBank'));
     }

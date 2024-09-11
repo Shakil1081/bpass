@@ -10,9 +10,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PartyGroup extends Model
 {
-    use SoftDeletes, Auditable, HasFactory;
+    //use SoftDeletes, Auditable, HasFactory;
+    use  Auditable, HasFactory;
 
-    public $table = 'party_groups';
+//    public $table = 'party_groups';
+    public $table = 'PARTY_GROUP';
 
     protected $dates = [
         'created_at',

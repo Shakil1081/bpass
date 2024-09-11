@@ -16,7 +16,7 @@
                         <label class="required" for="created_by_id">{{ trans('cruds.organization.fields.created_by') }}</label>
                         <select class="form-control select2 {{ $errors->has('created_by') ? 'is-invalid' : '' }}" name="created_by" id="created_by" required>
                             @foreach($created_bies as $id => $entry)
-                                <option value="{{ $id }}" {{ $id ==  $bankAccount->created_by ? 'selected' : '' }}>{{ $entry }}</option>
+                                <option value="{{ $id }}" {{ $id ==  $bankAccount->createdBy ? 'selected' : '' }}>{{ $entry }}</option>
                             @endforeach
                         </select>
                         @if($errors->has('created_by'))
@@ -33,7 +33,7 @@
                         <label for="updated_by_id">{{ trans('cruds.bank_account.fields.updated_by') }}</label>
                         <select class="form-control select2 {{ $errors->has('updated_by') ? 'is-invalid' : '' }}" name="updated_by_id" id="updated_by_id">
                             @foreach($updated_bies as $id => $entry)
-                                <option value="{{ $id }}" {{ $id ==  $bankAccount->updated_by ? 'selected' : '' }}>{{ $entry }}</option>
+                                <option value="{{ $id }}" {{ $id ==  $bankAccount->updatedBy ? 'selected' : '' }}>{{ $entry }}</option>
                             @endforeach
                         </select>
                         @if($errors->has('updated_by'))

@@ -44,7 +44,7 @@
                             {{ trans('cruds.department.fields.created_by') }}
                         </th>
                         <td>
-                            {{ $department->created_by->name ?? '' }}
+                            {{ $department->createdBy->full_name ?? '' }}
                         </td>
                     </tr>
                 </tbody>

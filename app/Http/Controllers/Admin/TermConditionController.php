@@ -25,7 +25,7 @@ class TermConditionController extends Controller
         abort_if(Gate::denies('term_condition_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = TermCondition::with(['created_by', 'updated_by', 'non_purchase_order', 'purchase_order'])->select(sprintf('%s.*', (new TermCondition)->table));
+            $query = TermCondition::with(['createdBy', 'updatedBy', 'non_purchase_order', 'purchase_order'])->select(sprintf('%s.*', (new TermCondition)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -50,11 +50,11 @@ class TermConditionController extends Controller
                 return $row->id ? $row->id : '';
             });
             $table->addColumn('created_by_name', function ($row) {
-                return $row->created_by ? $row->created_by->name : '';
+                return $row->createdBy ? $row->createdBy->full_name : '';
             });
 
             $table->addColumn('updated_by_name', function ($row) {
-                return $row->updated_by ? $row->updated_by->name : '';
+                return $row->updatedBy ? $row->updatedBy->full_name : '';
             });
 
             $table->editColumn('term', function ($row) {
@@ -80,9 +80,9 @@ class TermConditionController extends Controller
     {
         abort_if(Gate::denies('term_condition_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $created_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $created_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $updated_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $updated_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $non_purchase_orders = NonPurchaseOrder::pluck('actual_payable_amount', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -102,15 +102,15 @@ class TermConditionController extends Controller
     {
         abort_if(Gate::denies('term_condition_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $created_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $created_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $updated_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $updated_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $non_purchase_orders = NonPurchaseOrder::pluck('actual_payable_amount', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $purchase_orders = PurchaseOrder::pluck('actual_payable_amount', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $termCondition->load('created_by', 'updated_by', 'non_purchase_order', 'purchase_order');
+        $termCondition->load('createdBy', 'updatedBy', 'non_purchase_order', 'purchase_order');
 
         return view('admin.termConditions.edit', compact('created_bies', 'non_purchase_orders', 'purchase_orders', 'termCondition', 'updated_bies'));
     }
@@ -126,7 +126,7 @@ class TermConditionController extends Controller
     {
         abort_if(Gate::denies('term_condition_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $termCondition->load('created_by', 'updated_by', 'non_purchase_order', 'purchase_order');
+        $termCondition->load('createdBy', 'updatedBy', 'non_purchase_order', 'purchase_order');
 
         return view('admin.termConditions.show', compact('termCondition'));
     }

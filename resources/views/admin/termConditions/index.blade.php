@@ -100,8 +100,8 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'created_by_name', name: 'created_by.name' },
-{ data: 'updated_by_name', name: 'updated_by.name' },
+{ data: 'created_by_name', name: 'createdBy.full_name' },
+{ data: 'updated_by_name', name: 'updatedBy.full_name' },
 { data: 'term', name: 'term' },
 { data: 'non_purchase_order_actual_payable_amount', name: 'non_purchase_order.actual_payable_amount' },
 { data: 'purchase_order_actual_payable_amount', name: 'purchase_order.actual_payable_amount' },
@@ -116,7 +116,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 });
 
 </script>

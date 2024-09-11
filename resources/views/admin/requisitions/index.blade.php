@@ -94,7 +94,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'updated_by_name', name: 'updated_by.name' },
+{ data: 'updated_by_name', name: 'updatedBy.full_name' },
 { data: 'requisition_date', name: 'requisition_date' },
 { data: 'department_department_name', name: 'department.department_name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
@@ -108,7 +108,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 });
 
 </script>

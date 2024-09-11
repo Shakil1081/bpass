@@ -81,9 +81,9 @@ class OrganizationController extends Controller
     {
         abort_if(Gate::denies('organization_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $created_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $created_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $updated_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $updated_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.organizations.create', compact('created_bies', 'updated_bies'));
     }
@@ -107,11 +107,11 @@ class OrganizationController extends Controller
     {
         abort_if(Gate::denies('organization_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $created_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $created_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $updated_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $updated_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $organization->load('created_by', 'updated_by');
+        $organization->load('createdBy', 'updatedBy');
 
         return view('admin.organizations.edit', compact('created_bies', 'organization', 'updated_bies'));
     }
@@ -138,7 +138,7 @@ class OrganizationController extends Controller
     {
         abort_if(Gate::denies('organization_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $organization->load('created_by', 'updated_by');
+        $organization->load('createdBy', 'updatedBy');
 
         return view('admin.organizations.show', compact('organization'));
     }

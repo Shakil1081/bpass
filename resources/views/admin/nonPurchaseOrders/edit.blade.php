@@ -16,7 +16,7 @@
                         <label class="required" for="created_by_id">{{ trans('cruds.nonPurchaseOrder.fields.created_by') }}</label>
                         <select class="form-control select2 {{ $errors->has('created_by') ? 'is-invalid' : '' }}" name="created_by_id" id="created_by_id" required>
                             @foreach($created_bies as $id => $entry)
-                                <option value="{{ $id }}" {{ (old('created_by_id') ? old('created_by_id') : $nonPurchaseOrder->created_by->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                <option value="{{ $id }}" {{ (old('created_by') ? old('created_by') : $nonPurchaseOrder->createdBy->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                             @endforeach
                         </select>
                         @if($errors->has('created_by'))

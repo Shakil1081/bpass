@@ -28,7 +28,7 @@
                             {{ trans('cruds.termCondition.fields.created_by') }}
                         </th>
                         <td>
-                            {{ $termCondition->created_by->name ?? '' }}
+                            {{ $termCondition->createdBy->full_name ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -36,7 +36,7 @@
                             {{ trans('cruds.termCondition.fields.updated_by') }}
                         </th>
                         <td>
-                            {{ $termCondition->updated_by->name ?? '' }}
+                            {{ $termCondition->updatedBy->full_name ?? '' }}
                         </td>
                     </tr>
                     <tr>

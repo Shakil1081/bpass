@@ -90,9 +90,9 @@ class BankAccountController extends Controller
 
     public function create()
     {
-        $created_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $created_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $updated_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $updated_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $finance_banks = FinanceBank::pluck('finance_bank_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -120,9 +120,9 @@ class BankAccountController extends Controller
      */
     public function edit(BankAccount $bankAccount)
     {
-        $created_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $created_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $updated_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $updated_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $finance_banks = FinanceBank::pluck('finance_bank_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 

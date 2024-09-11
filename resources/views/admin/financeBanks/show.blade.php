@@ -28,7 +28,7 @@
                             {{ trans('cruds.financeBank.fields.created_by') }}
                         </th>
                         <td>
-                            {{ $financeBank->created_by->name ?? '' }}
+                            {{ $financeBank->createdBy->full_name ?? '' }}
                         </td>
                     </tr>
                     <tr>

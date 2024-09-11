@@ -38,9 +38,14 @@ class Requisition extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function updated_by()
+    public function createdBy()
     {
-        return $this->belongsTo(User::class, 'updated_by_id');
+        return $this->belongsTo(User::class, 'created_by','user_name');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by','user_name');
     }
 
     public function getRequisitionDateAttribute($value)

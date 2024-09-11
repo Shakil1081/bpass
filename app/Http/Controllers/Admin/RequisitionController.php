@@ -24,7 +24,7 @@ class RequisitionController extends Controller
         abort_if(Gate::denies('requisition_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Requisition::with(['updated_by', 'department'])->select(sprintf('%s.*', (new Requisition)->table));
+            $query = Requisition::with(['updatedBy', 'department'])->select(sprintf('%s.*', (new Requisition)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -49,7 +49,7 @@ class RequisitionController extends Controller
                 return $row->id ? $row->id : '';
             });
             $table->addColumn('updated_by_name', function ($row) {
-                return $row->updated_by ? $row->updated_by->name : '';
+                return $row->updatedBy ? $row->updatedBy->full_name : '';
             });
 
             $table->addColumn('department_department_name', function ($row) {
@@ -86,11 +86,11 @@ class RequisitionController extends Controller
     {
         abort_if(Gate::denies('requisition_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $updated_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $updated_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $departments = Department::pluck('department_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $requisition->load('updated_by', 'department');
+        $requisition->load('updatedBy', 'department');
 
         return view('admin.requisitions.edit', compact('departments', 'requisition', 'updated_bies'));
     }
@@ -106,7 +106,7 @@ class RequisitionController extends Controller
     {
         abort_if(Gate::denies('requisition_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $requisition->load('updated_by', 'department');
+        $requisition->load('updatedBy', 'department');
 
         return view('admin.requisitions.show', compact('requisition'));
     }

@@ -184,15 +184,15 @@ class PurchaseOrderController extends Controller
     {
         abort_if(Gate::denies('purchase_order_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $updated_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $updated_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $organizations = Organization::pluck('address', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $approved_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $approved_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $requisitions = Requisition::pluck('requisition_date', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $purchaseOrder->load('updated_by', 'organization', 'approved_by', 'requisition', 'team');
+        $purchaseOrder->load('updated_by', 'organization', 'approvedBy', 'requisition', 'team');
 
         return view('admin.purchaseOrders.edit', compact('approved_bies', 'organizations', 'purchaseOrder', 'requisitions', 'updated_bies'));
     }
@@ -208,7 +208,7 @@ class PurchaseOrderController extends Controller
     {
         abort_if(Gate::denies('purchase_order_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $purchaseOrder->load('updated_by', 'organization', 'approved_by', 'requisition', 'team');
+        $purchaseOrder->load('updated_by', 'organization', 'approvedBy', 'requisition', 'team');
 
         return view('admin.purchaseOrders.show', compact('purchaseOrder'));
     }

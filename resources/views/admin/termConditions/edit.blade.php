@@ -16,7 +16,7 @@
                         <label class="required" for="created_by_id">{{ trans('cruds.termCondition.fields.created_by') }}</label>
                         <select class="form-control select2 {{ $errors->has('created_by') ? 'is-invalid' : '' }}" name="created_by_id" id="created_by_id" required>
                             @foreach($created_bies as $id => $entry)
-                                <option value="{{ $id }}" {{ (old('created_by_id') ? old('created_by_id') : $termCondition->created_by->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                <option value="{{ $id }}" {{ (old('created_by') ? old('created_by') : $termCondition->createdBy->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                             @endforeach
                         </select>
                         @if($errors->has('created_by'))
@@ -32,7 +32,7 @@
                         <label for="updated_by_id">{{ trans('cruds.termCondition.fields.updated_by') }}</label>
                         <select class="form-control select2 {{ $errors->has('updated_by') ? 'is-invalid' : '' }}" name="updated_by_id" id="updated_by_id">
                             @foreach($updated_bies as $id => $entry)
-                                <option value="{{ $id }}" {{ (old('updated_by_id') ? old('updated_by_id') : $termCondition->updated_by->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                <option value="{{ $id }}" {{ (old('updated_by') ? old('updated_by') : $termCondition->updatedBy->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                             @endforeach
                         </select>
                         @if($errors->has('updated_by'))

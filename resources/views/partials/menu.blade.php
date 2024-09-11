@@ -107,66 +107,66 @@
             </a>
         </li>
         @endcan
-        @can('cheques_access')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.cheques.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/cheques") || request()->is("admin/cheques/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-money-check c-sidebar-nav-icon">
+{{--        @can('cheques_access')--}}
+{{--            <li class="c-sidebar-nav-item">--}}
+{{--                <a href="{{ route("admin.cheques.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/cheques") || request()->is("admin/cheques/*") ? "c-active" : "" }}">--}}
+{{--                    <i class="fa-fw fas fa-money-check c-sidebar-nav-icon">--}}
 
-                    </i>
-                    {{ trans('cruds.cheques.title') }}
-                </a>
-            </li>
-        @endcan
-        @can('cheques_access')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.cheques-details.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/cheques-details") || request()->is("admin/cheques-details/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-money-check c-sidebar-nav-icon">
+{{--                    </i>--}}
+{{--                    {{ trans('cruds.cheques.title') }}--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--        @endcan--}}
+{{--        @can('cheques_access')--}}
+{{--            <li class="c-sidebar-nav-item">--}}
+{{--                <a href="{{ route("admin.cheques-details.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/cheques-details") || request()->is("admin/cheques-details/*") ? "c-active" : "" }}">--}}
+{{--                    <i class="fa-fw fas fa-money-check c-sidebar-nav-icon">--}}
 
-                    </i>
-                    {{ trans('cruds.cheque_details.title') }}
-                </a>
-            </li>
-        @endcan
-        @can('party_group_access')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.party-groups.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/party-groups") || request()->is("admin/party-groups/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-users c-sidebar-nav-icon">
+{{--                    </i>--}}
+{{--                    {{ trans('cruds.cheque_details.title') }}--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--        @endcan--}}
+{{--        @can('party_group_access')--}}
+{{--            <li class="c-sidebar-nav-item">--}}
+{{--                <a href="{{ route("admin.party-groups.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/party-groups") || request()->is("admin/party-groups/*") ? "c-active" : "" }}">--}}
+{{--                    <i class="fa-fw fas fa-users c-sidebar-nav-icon">--}}
 
-                    </i>
-                    {{ trans('cruds.partyGroup.title') }}
-                </a>
-            </li>
-        @endcan
-        @can('party_group_bd_access')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.party-group-bds.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/party-group-bds") || request()->is("admin/party-group-bds/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-users c-sidebar-nav-icon">
+{{--                    </i>--}}
+{{--                    {{ trans('cruds.partyGroup.title') }}--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--        @endcan--}}
+{{--        @can('party_group_bd_access')--}}
+{{--            <li class="c-sidebar-nav-item">--}}
+{{--                <a href="{{ route("admin.party-group-bds.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/party-group-bds") || request()->is("admin/party-group-bds/*") ? "c-active" : "" }}">--}}
+{{--                    <i class="fa-fw fas fa-users c-sidebar-nav-icon">--}}
 
-                    </i>
-                    {{ trans('cruds.partyGroupBd.title') }}
-                </a>
-            </li>
-        @endcan
-        @can('party_table_access')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.party-tables.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/party-tables") || request()->is("admin/party-tables/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-table c-sidebar-nav-icon">
+{{--                    </i>--}}
+{{--                    {{ trans('cruds.partyGroupBd.title') }}--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--        @endcan--}}
+{{--        @can('party_table_access')--}}
+{{--            <li class="c-sidebar-nav-item">--}}
+{{--                <a href="{{ route("admin.party-tables.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/party-tables") || request()->is("admin/party-tables/*") ? "c-active" : "" }}">--}}
+{{--                    <i class="fa-fw fas fa-table c-sidebar-nav-icon">--}}
 
-                    </i>
-                    {{ trans('cruds.partyTable.title') }}
-                </a>
-            </li>
-        @endcan
-        @can('party_bills_access')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.party-bills.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/party-bills") || request()->is("admin/party-bills/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-money-bill-alt c-sidebar-nav-icon">
+{{--                    </i>--}}
+{{--                    {{ trans('cruds.partyTable.title') }}--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--        @endcan--}}
+{{--        @can('party_bills_access')--}}
+{{--            <li class="c-sidebar-nav-item">--}}
+{{--                <a href="{{ route("admin.party-bills.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/party-bills") || request()->is("admin/party-bills/*") ? "c-active" : "" }}">--}}
+{{--                    <i class="fa-fw fas fa-money-bill-alt c-sidebar-nav-icon">--}}
 
-                    </i>
-                    {{ trans('cruds.party_bills.title') }}
-                </a>
-            </li>
-        @endcan
+{{--                    </i>--}}
+{{--                    {{ trans('cruds.party_bills.title') }}--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--        @endcan--}}
         @can('department_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.departments.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/departments") || request()->is("admin/departments/*") ? "c-active" : "" }}">
@@ -262,16 +262,16 @@
                 </a>
             </li>
         @endcan
-        @can('budget_access')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.budgets.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/budgets") || request()->is("admin/budgets/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-money-bill-alt c-sidebar-nav-icon">
+{{--        @can('budget_access')--}}
+{{--            <li class="c-sidebar-nav-item">--}}
+{{--                <a href="{{ route("admin.budgets.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/budgets") || request()->is("admin/budgets/*") ? "c-active" : "" }}">--}}
+{{--                    <i class="fa-fw fas fa-money-bill-alt c-sidebar-nav-icon">--}}
 
-                    </i>
-                    {{ trans('cruds.budget.title') }}
-                </a>
-            </li>
-        @endcan
+{{--                    </i>--}}
+{{--                    {{ trans('cruds.budget.title') }}--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--        @endcan--}}
 
         @can('budget_details_access')
             <li class="c-sidebar-nav-item">

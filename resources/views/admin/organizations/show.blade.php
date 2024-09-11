@@ -28,7 +28,7 @@
                             {{ trans('cruds.organization.fields.created_by') }}
                         </th>
                         <td>
-                            {{ $organization->created_by->name ?? '' }}
+                            {{ $organization->createdBy->full_name	 ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -36,7 +36,7 @@
                             {{ trans('cruds.organization.fields.updated_by') }}
                         </th>
                         <td>
-                            {{ $organization->updated_by->name ?? '' }}
+                            {{ $organization->updatedBy->full_name ?? '' }}
                         </td>
                     </tr>
                     <tr>

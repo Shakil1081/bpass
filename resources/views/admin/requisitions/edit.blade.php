@@ -17,7 +17,7 @@
                         <label for="updated_by_id">{{ trans('cruds.requisition.fields.updated_by') }}</label>
                         <select class="form-control select2 {{ $errors->has('updated_by') ? 'is-invalid' : '' }}" name="updated_by_id" id="updated_by_id">
                             @foreach($updated_bies as $id => $entry)
-                                <option value="{{ $id }}" {{ (old('updated_by_id') ? old('updated_by_id') : $requisition->updated_by->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                <option value="{{ $id }}" {{ (old('updated_by') ? old('updated_by') : $requisition->updatedBy->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                             @endforeach
                         </select>
                         @if($errors->has('updated_by'))

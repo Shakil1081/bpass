@@ -75,7 +75,7 @@ class DepartmentController extends Controller
 
         $organizations = Organization::pluck('short_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $created_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $created_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.departments.create', compact('created_bies', 'organizations'));
     }
@@ -93,9 +93,9 @@ class DepartmentController extends Controller
 
         $organizations = Organization::pluck('short_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $created_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $created_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $department->load('organization', 'created_by', 'team');
+        $department->load('organization', 'createdBy', 'team');
 
         return view('admin.departments.edit', compact('created_bies', 'department', 'organizations'));
     }
@@ -111,7 +111,7 @@ class DepartmentController extends Controller
     {
         abort_if(Gate::denies('department_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $department->load('organization', 'created_by', 'team');
+        $department->load('organization', 'createdBy', 'team');
 
         return view('admin.departments.show', compact('department'));
     }

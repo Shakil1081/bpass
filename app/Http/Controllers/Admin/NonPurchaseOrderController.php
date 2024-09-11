@@ -125,9 +125,9 @@ class NonPurchaseOrderController extends Controller
     {
         abort_if(Gate::denies('non_purchase_order_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $created_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $created_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $updated_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $updated_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $organizations = Organization::pluck('address', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -145,13 +145,13 @@ class NonPurchaseOrderController extends Controller
     {
         abort_if(Gate::denies('non_purchase_order_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $created_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $created_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $updated_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $updated_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $organizations = Organization::pluck('address', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $nonPurchaseOrder->load('created_by', 'updated_by', 'organization');
+        $nonPurchaseOrder->load('createdBy', 'updatedBy', 'organization');
 
         return view('admin.nonPurchaseOrders.edit', compact('created_bies', 'nonPurchaseOrder', 'organizations', 'updated_bies'));
     }
@@ -167,7 +167,7 @@ class NonPurchaseOrderController extends Controller
     {
         abort_if(Gate::denies('non_purchase_order_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $nonPurchaseOrder->load('created_by', 'updated_by', 'organization');
+        $nonPurchaseOrder->load('createdBy', 'updatedBy', 'organization');
 
         return view('admin.nonPurchaseOrders.show', compact('nonPurchaseOrder'));
     }

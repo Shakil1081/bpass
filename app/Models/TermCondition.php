@@ -38,14 +38,14 @@ class TermCondition extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function created_by()
+    public function createdBy()
     {
-        return $this->belongsTo(User::class, 'created_by_id');
+        return $this->belongsTo(User::class, 'created_by','user_name');
     }
 
-    public function updated_by()
+    public function updatedBy()
     {
-        return $this->belongsTo(User::class, 'updated_by_id');
+        return $this->belongsTo(User::class, 'updated_by','user_name');
     }
 
     public function non_purchase_order()
