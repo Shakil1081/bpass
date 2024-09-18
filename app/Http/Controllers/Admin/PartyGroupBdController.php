@@ -122,7 +122,7 @@ class PartyGroupBdController extends Controller
     {
         abort_if(Gate::denies('party_group_bd_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $last_updated_stamps = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $last_updated_stamps = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.partyGroupBds.create', compact('last_updated_stamps'));
     }
@@ -146,7 +146,7 @@ class PartyGroupBdController extends Controller
     {
         abort_if(Gate::denies('party_group_bd_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $last_updated_stamps = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $last_updated_stamps = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $partyGroupBd->load('last_updated_stamp');
 

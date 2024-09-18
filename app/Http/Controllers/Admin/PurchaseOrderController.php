@@ -162,11 +162,11 @@ class PurchaseOrderController extends Controller
     {
         abort_if(Gate::denies('purchase_order_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $updated_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $updated_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $organizations = Organization::pluck('address', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $approved_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $approved_bies = User::pluck('full_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $requisitions = Requisition::pluck('requisition_date', 'id')->prepend(trans('global.pleaseSelect'), '');
 

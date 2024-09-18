@@ -10,11 +10,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PartyGroup extends Model
 {
-    //use SoftDeletes, Auditable, HasFactory;
-    use  Auditable, HasFactory;
+    use Auditable, HasFactory;
 
-//    public $table = 'party_groups';
     public $table = 'PARTY_GROUP';
+
+    protected $primaryKey = 'PARTY_ID';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $dates = [
         'created_at',
@@ -30,8 +32,24 @@ class PartyGroup extends Model
         'deleted_at',
     ];
 
+    public function getIdAttribute()
+    {
+        return $this->attributes['PARTY_ID'];
+    }
+
+    public function setIdAttribute($value)
+    {
+        $this->attributes['PARTY_ID'] = $value;
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    // Define a scope for ordering by PARTY_ID
+    public function scopeOrderByPartyId($query, $direction = 'DESC')
+    {
+        return $query->orderBy('PARTY_ID', $direction);
     }
 }

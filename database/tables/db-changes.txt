@@ -5,7 +5,3 @@
 
 //If needed
 ALTER TABLE `budget` ADD `budget_remaining` DOUBLE NULL DEFAULT NULL AFTER `budget_amount`;
-
-ALTER TABLE `PARTY_GROUP` CHANGE `PARTY_ID` `id` VARCHAR(20) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL;
-
-Id is not primary key and ity is in incorrect format in party_table so thats why id is not getting properly

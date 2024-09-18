@@ -20,7 +20,7 @@ class StoreDepartmentRequest extends FormRequest
             'department_name' => [
                 'string',
                 'required',
-                'unique:departments',
+                'unique:department',
             ],
             'organization_id' => [
                 'required',

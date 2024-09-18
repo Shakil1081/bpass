@@ -22,7 +22,9 @@ class PartyGroupController extends Controller
         abort_if(Gate::denies('party_group_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = PartyGroup::query()->select(sprintf('%s.*', (new PartyGroup)->table));
+            $query = PartyGroup::query()
+                ->select('PARTY_GROUP.*'); // Use the actual table column name
+
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -46,17 +48,22 @@ class PartyGroupController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
+
             $table->editColumn('party', function ($row) {
                 return $row->party ? $row->party : '';
             });
+
             $table->editColumn('group_name', function ($row) {
                 return $row->group_name ? $row->group_name : '';
             });
+
+            $table->orderColumn('id', 'PARTY_ID $1');
 
             $table->rawColumns(['actions', 'placeholder']);
 
             return $table->make(true);
         }
+
 
         return view('admin.partyGroups.index');
     }
@@ -68,8 +75,10 @@ class PartyGroupController extends Controller
         return view('admin.partyGroups.create');
     }
 
-    public function store(StorePartyGroupRequest $request)
+    //public function store(StorePartyGroupRequest $request)
+    public function store(Request $request)
     {
+        dd($request->all());
         $partyGroup = PartyGroup::create($request->all());
 
         return redirect()->route('admin.party-groups.index');

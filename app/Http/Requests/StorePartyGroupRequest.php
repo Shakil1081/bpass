@@ -20,7 +20,7 @@ class StorePartyGroupRequest extends FormRequest
             'party' => [
                 'string',
                 'required',
-                'unique:party_groups',
+                'unique:PARTY_GROUP',
             ],
             'group_name' => [
                 'string',

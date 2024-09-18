@@ -52,4 +52,24 @@ class Department extends Model
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+
+    public function getCreatedAtColumn()
+    {
+        return 'created_stamp';
+    }
+
+    public function getUpdatedAtColumn()
+    {
+        return 'last_updated_stamp';
+    }
+
+    public function setCreatedAt($value)
+    {
+        $this->attributes['created_stamp'] = $value;
+    }
+
+    public function setUpdatedAt($value)
+    {
+        $this->attributes['last_updated_stamp'] = $value;
+    }
 }

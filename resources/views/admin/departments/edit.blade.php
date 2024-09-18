@@ -41,10 +41,10 @@
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label for="created_by_id">{{ trans('cruds.department.fields.created_by') }}</label>
-                        <select class="form-control select2 {{ $errors->has('created_by') ? 'is-invalid' : '' }}" name="created_by_id" id="created_by_id">
+                        <label for="created_by">{{ trans('cruds.department.fields.created_by') }}</label>
+                        <select class="form-control select2 {{ $errors->has('created_by') ? 'is-invalid' : '' }}" name="created_by" id="created_by">
                             @foreach($created_bies as $id => $entry)
-                                <option value="{{ $id }}" {{ (old('created_by_id') ? old('created_by_id') : $department->createdBy->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                <option value="{{ $id }}" {{ (old('created_by') ? old('created_by') : $department->createdBy->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                             @endforeach
                         </select>
                         @if($errors->has('created_by'))

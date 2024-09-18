@@ -22,9 +22,7 @@
         <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-PartyTable">
             <thead>
                 <tr>
-                    <th width="10">
 
-                    </th>
                     <th>
                         {{ trans('cruds.partyTable.fields.id') }}
                     </th>
@@ -85,12 +83,11 @@
     retrieve: true,
     aaSorting: [],
     ajax: "{{ route('admin.party-tables.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
+columns: [
 { data: 'id', name: 'id' },
 { data: 'party_name', name: 'party_name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 25,
@@ -100,7 +97,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 });
 
 </script>

@@ -15,19 +15,22 @@ class PartyTable extends Model
 
 //    public $table = 'party_tables';
     public $table = 'party_table';
-
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
+    public $timestamps = false;
+    protected $casts = [
+        'id' => 'string',  // Ensure this line does not exist for the 'id' field
     ];
+//    protected $dates = [
+//        'created_at',
+//        'updated_at',
+//        'deleted_at',
+//    ];
 
     protected $fillable = [
         'id',
         'party_name',
-        'created_at',
-        'updated_at',
-        'deleted_at',
+//        'created_at',
+//        'updated_at',
+//        'deleted_at',
     ];
 
     protected function serializeDate(DateTimeInterface $date)

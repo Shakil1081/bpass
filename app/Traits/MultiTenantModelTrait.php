@@ -14,9 +14,9 @@ trait MultiTenantModelTrait
             static::creating(function ($model) use ($isAdmin) {
                 // Prevent admin from setting his own id - admin entries are global.
                 // If required, remove the surrounding IF condition and admins will act as users
-                if (! $isAdmin) {
-                    $model->team_id = auth()->user()->team_id;
-                }
+//                if (! $isAdmin) {
+//                    $model->team_id = auth()->user()->team_id;
+//                }
             });
 //            if (! $isAdmin) {
 //                static::addGlobalScope('team_id', function (Builder $builder) {

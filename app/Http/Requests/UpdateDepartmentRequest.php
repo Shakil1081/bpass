@@ -20,7 +20,7 @@ class UpdateDepartmentRequest extends FormRequest
             'department_name' => [
                 'string',
                 'required',
-                'unique:departments,department_name,' . request()->route('department')->id,
+                'unique:department,department_name,' . request()->route('department')->id,
             ],
             'organization_id' => [
                 'required',
