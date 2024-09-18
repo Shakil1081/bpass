@@ -259,8 +259,8 @@ class PurchaseOrderController extends Controller
 
     public function getPurchaseOrder(Request $request)
     {
-        $PurOrders = PurchaseOrder::whereMonth('created_at', Carbon::now()->month)
-            ->whereYear('created_at', Carbon::now()->year)
+        $PurOrders = PurchaseOrder::whereMonth('issue_date', Carbon::now()->month)
+            ->whereYear('issue_date', Carbon::now()->year)
             ->get();
 
         $organization = Organization::where('id',$request->organization_id)->value('short_name');
