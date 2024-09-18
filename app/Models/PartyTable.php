@@ -23,6 +23,7 @@ class PartyTable extends Model
     ];
 
     protected $fillable = [
+        'id',
         'party_name',
         'created_at',
         'updated_at',
